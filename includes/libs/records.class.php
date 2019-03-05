@@ -246,6 +246,15 @@ class PowerBBRecords
 		if($config['db']['dbtype'] == 'mysqli')
 		{
 		$connect = @mysqli_connect($config['db']['server'],$config['db']['username'],$config['db']['password'],$config['db']['name']);
+		if($config['db']['encoding']!='')
+		{
+		$encoding     = 'utf8mb4';
+		}
+		else
+		{
+		$encoding     = $config['db']['encoding'];
+		}
+		mysqli_set_charset($connect, $encoding);
 		$query = mysqli_query($connect,$query_string);
 		$insert_id = (mysqli_insert_id($connect));
 		@session_start();

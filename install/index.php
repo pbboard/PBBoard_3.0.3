@@ -2001,7 +2001,7 @@ EOF;
        $max_online_date 		    = @date("d/m/Y h:i a");
 
         $db->query("UPDATE " . $config['db']['prefix'] . "info SET value='".$db->escape_string($PBBoard->get_input('bbname'))."' WHERE var_name='title'");
-        if(!empty($PBBoard->get_input('homename'))){
+        if($PBBoard->get_input('homename') !=''){
         $db->query("UPDATE " . $config['db']['prefix'] . "info SET value='".$db->escape_string($PBBoard->get_input('homename'))."' WHERE var_name='title_portal'");
         }
         $db->query("UPDATE " . $config['db']['prefix'] . "info SET value='".$db->escape_string($PBBoard->get_input('adminemail'))."' WHERE var_name='send_email'");
