@@ -406,7 +406,7 @@ class PowerBBTHETA extends PowerBBInstall
 	{
 		global $PowerBB;
 
-		$update = $PowerBB->DB->sql_query("UPDATE " . $PowerBB->table['style'] . " SET style_on ='0'");
+		$update = $PowerBB->DB->sql_query("UPDATE " . $PowerBB->table['style'] . " SET style_path ='../styles/default/css/style.css' WHERE image_path = '../styles/main/images'" );
 
 		return ($update) ? true : false;
 	}
@@ -915,13 +915,10 @@ $updateLastTime = $PowerBB->install->Add_last_time_updates();
 
 
 		$PowerBB->html->open_p();
-        $PowerBB->html->p_msg('تمت الترقية إلى الإصدار 3.0.2 بنجاح. يرجى التأكد من حذفك لمجلد setup');
+        $PowerBB->html->p_msg('تمت الترقية إلى الإصدار 3.0.2 بنجاح. ');
 		$PowerBB->html->close_p();
 
-	    $PowerBB->html->make_link('الدخول إلى لوحة الإدارة','../../admincp/index.php');
-        $PowerBB->html->make_link('الدخول إلى صفحة المنتدى الرئيسية','../../index.php');
 		$PowerBB->html->make_link('البدأ بالترقية إلى الإصدار 3.0.3','../../install/upgrade.php');
-
 
 }
 

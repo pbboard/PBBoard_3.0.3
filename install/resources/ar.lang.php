@@ -394,6 +394,3 @@ $l['update_all_sections_cache'] = "تحديث كاش جميع المنتديات
 $l['recheck_server_character'] = 'فحص ترميز أحرف قاعدة البيانات';
 $l['req_convert_utf'] = '<p><strong>انقر فوق التالي لتحويل ترميز أحرف PBBoard من latin1 إلى UTF8MP4 , هذه الخطوة ستأخذ بعض الوقت حسب حجم قاعدة البيانات فيرجى الإنتظار حتى اتمام العملية بالكامل ..</strong></p>';
 $l['finish_upgrade_sections_cache'] = '<br /><p>تم الإنتهاء من تحديث اقسام المنتدى ,انقر فوق "التالي" لمتابعة عملية "إنهاء الترقية"..</p>';
-$l['fixup_all_cache'] = "</form><form action=\"{1}index.php?page=fixup&amp;update_meter=1&amp;all_cache=1\" method=\"post\">
-	<div id=\"next_button\"><input type=\"submit\" class=\"submit_button\" value=\"التالي »\"></div><br style=\"clear: both;\">
-</form>";

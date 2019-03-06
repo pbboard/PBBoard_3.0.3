@@ -959,9 +959,7 @@ height:32px;
 display:inline-block;
 padding-left:0px;
 list-style:none;
-border-left-style: solid;
-border-left-width: 0px;
-border-left-color: #D6BCBC;
+
 }
 #subnavigation a{
 color:#333333;
@@ -1328,8 +1326,12 @@ padding:0 1px 0 1px;
 border:1px solid #E8E8E8;
 }
 .text{
-    font-size: 1.3em;
-    overflow-x: auto;
+font-family: "Droid Arabic Kufi","tahoma",sans-serif;
+font-weight: normal;
+font-size: 15px;
+color:#000;
+padding:2px;
+margin:2px;
 }
 .text a:link{
 color:#008FDC;
@@ -1586,44 +1588,38 @@ border:1px solid #EAE3D1;
 background-color:#EDF7FF;
 }
 .quotetop{
-background-color: #FFFFFF;
+background: none repeat-x scroll 0 0 #e3f6ff;
 background-image:url('../images/lastpost.gif');
 background-repeat:no-repeat;
-background-position:12px 5px;
+background-position:12px 12px;
 border-top-left-radius:9px;
 border-top-right-radius:9px;
-border-bottom-right-radius:9px;
-border-bottom-left-radius:9px;
-border:2px solid #C6C9C9;
-color:#C70917;
+*border-bottom-right-radius:9px;
+*border-bottom-left-radius:9px;
+border:1px solid #98bdc5;
+color:#323232;
 font: normal 11px tahoma;
 text-align:right;
-padding-right:11px;
-padding-top:3px;
-padding-bottom:3px;
+padding: 10px;
 width:auto;
-max-width:30%;
-margin:15px 35px -24px 18px;
+margin:20px 40px -20px 22px;
 position:relative;
+width:80%;
 }
 .quotemain{
-background-color: #FFFFFF;
-background-image:url('../images/css_img_quote.gif');
-background-repeat:no-repeat;
-background-position:top 7px left 7px;
-margin-right:auto;
-margin-left:auto;
-border-top-left-radius:14px;
-border-top-right-radius:14px;
-border-bottom-right-radius:14px;
-border-bottom-left-radius:14px;
-border:2px solid #C6C9C9;
-color:#694040;
-padding-top:13px;
-padding-right:8px;
-padding-left:8px;
-padding-bottom:9px;
-width:95%;
+    background: none repeat-x scroll 0 0 #e3f6ff;
+    font-family: "Droid Arabic Kufi","tahoma",sans-serif;
+    border: 1px solid #98bdc5;
+    border-top: 1px solid #FFFFFF;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 0 3px #e3f6ff;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+    padding: 10px;
+    display: inline-block;
+	width:80%;
 }
 .codemain{
 background-color: transparent;
@@ -2575,16 +2571,6 @@ text-decoration:none;
 padding:3px;
 text-align:right;
 border:1px solid #FFFFFF;
-height:22px;
-}
-div.menu_popup a{
-line-height: 13px;
-padding:0px;
-margin:0px;
-}
-.menu_popup a{
-color:#0A3F63 !important;
-text-decoration:none;
 }
 
 .drop_menu{

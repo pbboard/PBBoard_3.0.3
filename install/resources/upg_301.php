@@ -297,7 +297,7 @@ elseif ($PowerBB->_GET['step'] == 7)
 		   $del_file_sectiongroup_cache2 = @unlink('../../cache/sectiongroup_cache2.php');
 
 		$PowerBB->html->open_p();
-        $PowerBB->html->p_msg('تمت الترقية إلى الأصدار 3.0.1 بنجاح. يرجى التأكد من حذفك لمجلد setup');
+        $PowerBB->html->p_msg('تمت الترقية إلى الأصدار 3.0.1 بنجاح. ');
 		$PowerBB->html->close_p();
 
 		$PowerBB->html->make_link('البدأ بالترقية إلى الإصدار 3.0.2','upg_302.php?step=1');

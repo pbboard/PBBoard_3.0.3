@@ -2001,7 +2001,7 @@ EOF;
        $max_online_date 		    = @date("d/m/Y h:i a");
 
         $db->query("UPDATE " . $config['db']['prefix'] . "info SET value='".$db->escape_string($PBBoard->get_input('bbname'))."' WHERE var_name='title'");
-        if($PBBoard->get_input('homename')){
+        if(!empty($PBBoard->get_input('homename'))){
         $db->query("UPDATE " . $config['db']['prefix'] . "info SET value='".$db->escape_string($PBBoard->get_input('homename'))."' WHERE var_name='title_portal'");
         }
         $db->query("UPDATE " . $config['db']['prefix'] . "info SET value='".$db->escape_string($PBBoard->get_input('adminemail'))."' WHERE var_name='send_email'");
@@ -2093,7 +2093,7 @@ function install_done()
 		'register_time' => $now,
 		'style' => '1',
 		'username_style_cache' => $username_style_cache,
-		'user_title' => 'Administrator',
+		'user_title' => 'المشرف العام',
 		'lang' => '1',
 		'style_id_cache' => '1',
 		'inviter' => $db->escape_string($PBBoard->get_input('adminuser')),
@@ -2446,6 +2446,146 @@ function unhtmlentities($string)
 	$trans_tbl = array_flip($trans_tbl);
 
 	return strtr($string, $trans_tbl);
+}
+
+/**
+*Update Section Cache ;)
+*/
+function UpdateSectionCache($SectionCache)
+{
+global $PowerBB;
+// The number of section's replys number
+$reply_num = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT id FROM " . $PowerBB->table['reply'] . " WHERE section = '$SectionCache' "));
+$UpdateArr 					= 	array();
+$UpdateArr['field']			=	array();
+$UpdateArr['field']['reply_num'] 	= 	$reply_num;
+$UpdateArr['where']					= 	array('id',$SectionCache);
+$UpdateReplyNumber = $PowerBB->core->Update($UpdateArr,'section');
+// The number of section's subjects number
+$subject_nm = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT id FROM " . $PowerBB->table['subject'] . " WHERE section = '$SectionCache' AND delete_topic<>1"));
+// The number of section's subjects number
+$UpdateArr 					= 	array();
+$UpdateArr['field']			=	array();
+$UpdateArr['field']['subject_num'] 	= 	$subject_nm;
+$UpdateArr['where']					= 	array('id',$SectionCache);
+$UpdateSubjectNumber = $PowerBB->core->Update($UpdateArr,'section');
+$GetLastqueryReplyForm = $PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['reply'] . " WHERE section = '$SectionCache' AND delete_topic<>1 AND review_reply<>1 ORDER by write_time DESC LIMIT 0 , 30");
+$GetLastReplyForm = $PowerBB->DB->sql_fetch_array($GetLastqueryReplyForm);
+$GetLastSubjectInfoQuery = $PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['subject'] . " WHERE section = '$SectionCache' AND delete_topic<>1 AND review_subject<>1 ORDER by native_write_time DESC LIMIT 0 , 30 ");
+$GetLastSubjectInf = $PowerBB->DB->sql_fetch_array($GetLastSubjectInfoQuery);
+if ($PowerBB->_GET['page'] != 'new_topic')
+{
+if($GetLastReplyForm['write_time'] > $GetLastSubjectInf['native_write_time'])
+{
+$GetSubjectInfoQuery = $PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['subject'] . " WHERE id = '".$GetLastReplyForm['subject_id']."' AND delete_topic<>1 AND review_subject<>1 ");
+$SubjectInf = $PowerBB->DB->sql_fetch_array($GetSubjectInfoQuery);
+// Get info subject
+$last_subjectid = $GetLastReplyForm['subject_id'];
+$icon = $SubjectInf['icon'];
+$last_reply = $SubjectInf['last_reply'];
+$last_berpage_nm = $SubjectInf['last_berpage_nm'];
+$last_writer = $SubjectInf['last_replier'];
+$title = $SubjectInf['title'];
+$last_date = $SubjectInf['write_time'];
+}
+else
+{
+// Get info subject
+$last_subjectid = $GetLastSubjectInf['id'];
+$icon = $GetLastSubjectInf['icon'];
+$last_reply = $GetLastSubjectInf['last_reply'];
+$last_berpage_nm = $GetLastSubjectInf['last_berpage_nm'];
+$last_writer = $GetLastSubjectInf['writer'];
+$title = $GetLastSubjectInf['title'];
+$last_date = $GetLastSubjectInf['write_time'];
+}
+}
+if ($PowerBB->_GET['page'] == 'new_topic')
+{
+// Get info subject
+$last_subjectid = $GetLastSubjectInf['id'];
+$icon = $GetLastSubjectInf['icon'];
+$last_reply = $GetLastSubjectInf['last_reply'];
+$last_berpage_nm = $GetLastSubjectInf['last_berpage_nm'];
+$last_writer = $GetLastSubjectInf['writer'];
+$title = $GetLastSubjectInf['title'];
+$last_date = $GetLastSubjectInf['native_write_time'];
+}
+// Get Section Info
+$SecArr 			= 	array();
+$SecArr['where'] 	= 	array('id',$SectionCache);
+$sdr_SectionInfo = $PowerBB->core->GetInfo($SecArr,'section');
+
+if ($subject_nm == 0)
+{
+// Get Section Info
+$SecParenreplytArr = $PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['section'] . " WHERE parent='$SectionCache' AND review_subject<>1 ORDER by last_time DESC LIMIT 0 , 30 ");
+$sdr_ParentsInfo = $PowerBB->DB->sql_fetch_array($SecParenreplytArr);
+if($sdr_ParentsInfo['last_writer'] !='')
+{
+// Update Last subject's information in Section Form
+$UpdateLastFormSecArr = array();
+$UpdateLastFormSecArr['field']			=	array();
+$UpdateLastFormSecArr['field']['last_writer'] 		= 	$sdr_ParentsInfo['last_writer'];
+$UpdateLastFormSecArr['field']['last_subject'] 		= 	$sdr_ParentsInfo['last_subject'];
+$UpdateLastFormSecArr['field']['last_subjectid'] 	= 	$sdr_ParentsInfo['last_subjectid'];
+$UpdateLastFormSecArr['field']['last_date'] 	= 	$sdr_ParentsInfo['last_date'];
+$UpdateLastFormSecArr['field']['last_time'] 	= 	$sdr_ParentsInfo['last_time'];
+$UpdateLastFormSecArr['field']['icon'] 		    = 	$sdr_ParentsInfo['icon'];
+$UpdateLastFormSecArr['field']['moderators'] 		    = 	$cache;
+$UpdateLastFormSecArr['field']['last_reply'] 	= 	$sdr_ParentsInfo['last_reply'];
+$UpdateLastFormSecArr['field']['last_berpage_nm']  = 	$sdr_ParentsInfo['last_berpage_nm'];
+$UpdateLastFormSecArr['field']['replys_review_num']  = 	$sdr_ParentsInfo['replys_review_num'];
+$UpdateLastFormSecArr['field']['subjects_review_num']  = 	$sdr_ParentsInfo['subjects_review_num'];
+$UpdateLastFormSecArr['where'] 		        = 	array('id',$SectionCache);
+// Update Last Form Sec subject's information
+$UpdateLastFormSec = $PowerBB->core->Update($UpdateLastFormSecArr,'section');
+}
+else
+{
+// Update Last subject's information in Section Form
+$UpdateLastFormSecArr = array();
+$UpdateLastFormSecArr['field']			=	array();
+$UpdateLastFormSecArr['field']['last_writer'] 		= 	'';
+$UpdateLastFormSecArr['field']['last_subject'] 		= 	'';
+$UpdateLastFormSecArr['field']['last_subjectid'] 	= 	'';
+$UpdateLastFormSecArr['field']['last_date'] 	= 	'';
+$UpdateLastFormSecArr['field']['last_time'] 	= 	'';
+$UpdateLastFormSecArr['field']['icon'] 		    = 	'';
+$UpdateLastFormSecArr['field']['last_reply'] 	= 	0;
+$UpdateLastFormSecArr['field']['last_berpage_nm']  = 	0;
+$UpdateLastFormSecArr['field']['replys_review_num']  = 	0;
+$UpdateLastFormSecArr['field']['subjects_review_num']  = 	0;
+$UpdateLastFormSecArr['where'] 		        = 	array('id',$SectionCache);
+// Update Last Form Sec subject's information
+$UpdateLastFormSec = $PowerBB->core->Update($UpdateLastFormSecArr,'section');
+}
+}
+else
+{
+$review_replyNumArr = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT id FROM " . $PowerBB->table['reply'] . " WHERE section='$SectionCache' and review_reply=1 "));
+$review_subjectNumArr = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT id FROM " . $PowerBB->table['subject'] . " WHERE section='$SectionCache' and review_subject=1 "));
+
+// Update Last subject's information in Section Form
+$UpdateLastFormSecArr = array();
+$UpdateLastFormSecArr['field']			=	array();
+$UpdateLastFormSecArr['field']['last_writer'] 		= 	$last_writer;
+$UpdateLastFormSecArr['field']['last_subject'] 		= 	$title;
+$UpdateLastFormSecArr['field']['last_subjectid'] 	= 	$last_subjectid;
+$UpdateLastFormSecArr['field']['last_date'] 	= 	$last_date;
+$UpdateLastFormSecArr['field']['last_time'] 	= 	$last_date;
+$UpdateLastFormSecArr['field']['icon'] 		    = 	$icon;
+$UpdateLastFormSecArr['field']['moderators'] 		    = 	$cache;
+$UpdateLastFormSecArr['field']['last_reply'] 	= 	$last_reply;
+$UpdateLastFormSecArr['field']['last_berpage_nm']  = 	$last_berpage_nm;
+$UpdateLastFormSecArr['field']['replys_review_num']  = 	$review_replyNumArr;
+$UpdateLastFormSecArr['field']['subjects_review_num']  = 	$review_subjectNumArr;
+$UpdateLastFormSecArr['where'] 		        = 	array('id',$SectionCache);
+// Update Last Form Sec subject's information
+$UpdateLastFormSec = $PowerBB->core->Update($UpdateLastFormSecArr,'section');
+}
+
+return;
 }
 
 

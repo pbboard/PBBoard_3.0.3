@@ -393,7 +393,3 @@ $l['update_all_sections_cache'] = "Update All Sections Cache";
 $l['recheck_server_character'] = 'check the encoding of the database characters';
 $l['req_convert_utf'] = '<p><strong>Click Next to Convert characters PBBoard from latin1 to UTF8MP4 , This step will take some time depending on the size of the database, Please wait until the entire process is complete..</strong></p>';
 $l['finish_upgrade_sections_cache'] = '<br /><p>Update All Sections Cache successfully been completed ,Click Next to continue the upgrade finish process"..</p>';
-$l['fixup_all_cache'] = "</form><form action=\"index.php?page=fixup&amp;update_meter=1&amp;all_cache=1\" method=\"post\">
-<input type=\"hidden\" name=\"action\" value=\"upgrade303_update_section_cache\">
-	<div id=\"next_button\"><input type=\"submit\" class=\"submit_button\" value=\"Next »\"></div><br style=\"clear: both;\">
-</form>";

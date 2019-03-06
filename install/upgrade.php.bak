@@ -1,8 +1,7 @@
 <?php
 @set_time_limit(0);
 @ini_set('max_execution_time', 123456);
-$Generatekey = @sha1(@microtime());
-$_SESSION['csrf'] = $Generatekey;
+
 define('PBB_ROOT', dirname(dirname(__FILE__))."/");
 define("INSTALL_ROOT", dirname(__FILE__)."/");
 define("TIME_NOW", time());
@@ -24,17 +23,8 @@ $PBBoard = new PBBoard;
 
 $input = array();
 
-if(file_exists(PBB_ROOT."/includes/config.php"))
-{
 require_once PBB_ROOT."includes/config.php";
-}
-else
-{
-if(file_exists(PBB_ROOT."/engine/config.php"))
-{
-require_once PBB_ROOT."engine/config.php";
-}
-}
+
 $orig_config = $config;
 
 if(!is_array($config['database']))
@@ -199,7 +189,8 @@ else
 
 		//header("Location: upgrade.php");
 	}
-    elseif($PBBoard->input['action'] == "upgrade303_update_section_cache")
+    elseif($PBBoard->input['action'] == "upgrade303_update_section_cache"
+    or $_GET['step'] == "upgrade303_update_section_cache")
 	{
 		 require_once INSTALL_ROOT."resources/upg_303.php";
 		 upgrade303_update_section_cache();
