@@ -1185,7 +1185,7 @@ class PowerBBCodeParse
  	{
  		global $PowerBB;
  		$string = str_replace('\\"', '"', $string);
-		$strings = htmlentities($string, eNT_QUOTES, "UTF-8");
+		$strings = htmlentities($string, ENT_QUOTES, "UTF-8");
 		return "[".$message."]".$strings."[/".$message."]";
  	}
  }

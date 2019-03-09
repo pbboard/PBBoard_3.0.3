@@ -1,5 +1,5 @@
 <?php
-//error_reporting(E_ALL ^ E_NOTICE);
+@error_reporting(E_ALL ^ E_NOTICE);
 // Define safe_mode
 define('SAFEMODE', (ini_get('safe_mode') == 1 OR strtolower(ini_get('safe_mode')) == 'on') ? true : false);
 

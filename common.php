@@ -1,11 +1,12 @@
 <?php
+@error_reporting(E_ALL ^ E_NOTICE);
 @set_time_limit(0);
 @ini_set('max_execution_time', 123456);
-session_start();
+@session_start();
 
 if(function_exists('date_default_timezone_set') && !ini_get('date.timezone'))
 {
-	date_default_timezone_set('GMT');
+	@date_default_timezone_set('GMT');
 }
 // Security REQUEST METHOD POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST'
