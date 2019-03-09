@@ -830,7 +830,7 @@ class PowerBBFixMOD
 			$To = $PowerBB->functions->GetMianDir();
 			$To = str_ireplace("index.php/", '', $To);
 
-		$pbboard_last_time_updates = 'http://www.pbboard.info/check_updates/pbboard_last_time_updates.txt';
+		$pbboard_last_time_updates = 'http://www.pbboard.info/check_updates/pbboard_last_time_updates_303.txt';
 		$last_time_updates = file_get_contents($pbboard_last_time_updates);
 
          if(!$last_time_updates)

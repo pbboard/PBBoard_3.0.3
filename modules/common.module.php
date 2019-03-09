@@ -78,7 +78,7 @@ class PowerBBCommon
 
 		$PowerBB->template->assign('csrf_key',$_SESSION['csrf']);
 
-			if (isset($PowerBB->_CONF['info_row']['mor_seconds_online']) == '300')
+			if ($PowerBB->_CONF['info_row']['mor_seconds_online'] == '300')
 			{
 	 		// Delete not important rows in online table
 	 		$CleanOnline = $PowerBB->_CONF['timeout'];
@@ -87,17 +87,19 @@ class PowerBBCommon
 			else
 			{
 			// Delete not important rows in online table
-		     if (isset($PowerBB->_CONF['info_row']['mor_seconds_online']))
+		     if ($PowerBB->_CONF['info_row']['mor_seconds_online'])
 		      {
 	           $time_check_online=$PowerBB->_CONF['now']-$PowerBB->_CONF['info_row']['mor_seconds_online'];
 	           $DelOnline = $PowerBB->DB->sql_query("DELETE FROM " . $PowerBB->table['online'] . " WHERE logged <= $time_check_online ");
 	          }
 			}
 
+
+
          // Delete not important rows in today table
-	      if (isset($PowerBB->_CONF['info_row']['show_online_list_today']) == 1)
+	      if ($PowerBB->_CONF['info_row']['show_online_list_today'] == 1)
 	      {
-			if (isset($PowerBB->_CONF['info_row']['mor_hours_online_today']) == '0')
+			if ($PowerBB->_CONF['info_row']['mor_hours_online_today'] == '0')
 			{
 				if ($PowerBB->_CONF['date'] != $PowerBB->_CONF['info_row']['today_date_cache'])
 				{
@@ -756,7 +758,9 @@ class PowerBBCommon
 		if (!isset($PowerBB->_CONF['rows']['style'])
 			or !is_array($PowerBB->_CONF['rows']['style']))
 		{
+			$PowerBB->functions->ShowHeader($PowerBB->_CONF['template']['_CONF']['lang']['sorry_visitor_you_cant_visit_this_forum_today']);
 			$PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['Not_Was_style_Information']);
+
 		}
 
 	}
