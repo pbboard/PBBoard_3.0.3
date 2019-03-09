@@ -13,23 +13,23 @@ $tables[] = "CREATE TABLE pbb_addons (
   name varchar(250) NOT NULL default '',
   title varchar(250) NOT NULL default '',
   version varchar(25) NOT NULL default '',
-  description text NOT NULL default '',
+  description text NOT NULL,
   author varchar(250) NOT NULL default '',
   url varchar(350) NOT NULL default '',
-  installcode text NOT NULL default '',
-  uninstallcode text NOT NULL default '',
-  module_index mediumtext NOT NULL default '',
-  module_admin mediumtext NOT NULL default '',
+  installcode text NOT NULL,
+  uninstallcode text NOT NULL,
+  module_index mediumtext NOT NULL,
+  module_admin mediumtext NOT NULL,
   active smallint(5) UNSIGNED NOT NULL DEFAULT '1',
-  languagevals longtext NOT NULL default '',
+  languagevals longtext NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
 $tables[] = "CREATE TABLE pbb_ads (
   id int(9) NOT NULL AUTO_INCREMENT,
-  sitename text NOT NULL default '',
-  site text NOT NULL default '',
-  picture text NOT NULL default '',
+  sitename text NOT NULL,
+  site text NOT NULL,
+  picture text NOT NULL,
   width int(9) NOT NULL DEFAULT '0',
   height int(9) NOT NULL DEFAULT '0',
   clicks int(9) NOT NULL DEFAULT '0',
@@ -39,7 +39,7 @@ $tables[] = "CREATE TABLE pbb_ads (
 $tables[] = "CREATE TABLE pbb_adsense (
   id int(9) NOT NULL AUTO_INCREMENT,
   name varchar(100) NOT NULL default '',
-  adsense text NOT NULL default '',
+  adsense text NOT NULL,
   home int(9) NOT NULL DEFAULT '0',
   forum int(9) NOT NULL DEFAULT '0',
   topic int(9) NOT NULL DEFAULT '0',
@@ -56,7 +56,7 @@ $tables[] = "CREATE TABLE pbb_adsense (
 $tables[] = "CREATE TABLE pbb_announcement (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(200) NOT NULL default '',
-  text text NOT NULL default '',
+  text text NOT NULL,
   writer varchar(200) NOT NULL default '',
   date varchar(100) NOT NULL default '',
   visitor int(10) NOT NULL DEFAULT '0',
@@ -97,17 +97,17 @@ $tables[] = "CREATE TABLE pbb_award (
 
 $tables[] = "CREATE TABLE pbb_banned (
   id int(9) NOT NULL AUTO_INCREMENT,
-  text text NOT NULL default '',
+  text text NOT NULL,
   text_type int(1) NOT NULL DEFAULT '0',
   ip varchar(100) NOT NULL default '',
-  reason text NOT NULL default '',
+  reason text NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
 $tables[] = "CREATE TABLE pbb_blocks (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(355) NOT NULL default '',
-  text longtext NOT NULL default '',
+  text longtext NOT NULL,
   place_block varchar(300) NOT NULL default '',
   sort int(5) NOT NULL DEFAULT '0',
   active smallint(5) UNSIGNED NOT NULL DEFAULT '1',
@@ -118,7 +118,7 @@ $tables[] = "CREATE TABLE pbb_chat (
   id int(9) NOT NULL AUTO_INCREMENT,
   username varchar(250) NOT NULL default '',
   country varchar(100) NOT NULL default '',
-  message text NOT NULL default '',
+  message text NOT NULL,
   user_id int(9) NOT NULL DEFAULT '0',
   date varchar(100) NOT NULL default '',
   PRIMARY KEY (id)
@@ -127,11 +127,11 @@ $tables[] = "CREATE TABLE pbb_chat (
 $tables[] = "CREATE TABLE pbb_custom_bbcode (
   id int(9) NOT NULL AUTO_INCREMENT,
   bbcode_title varchar(355) NOT NULL DEFAULT '',
-  bbcode_desc text NOT NULL default '',
+  bbcode_desc text NOT NULL,
   bbcode_tag varchar(255) NOT NULL DEFAULT '',
-  bbcode_replace text NOT NULL default '',
+  bbcode_replace text NOT NULL,
   bbcode_useoption tinyint(1) NOT NULL DEFAULT '0',
-  bbcode_example text NOT NULL default '',
+  bbcode_example text NOT NULL,
   bbcode_switch varchar(355) NOT NULL DEFAULT '',
   bbcode_add_into_menu int(1) NOT NULL DEFAULT '0',
   bbcode_menu_option_text varchar(400) NOT NULL DEFAULT '',
@@ -152,18 +152,18 @@ $tables[] = "CREATE TABLE pbb_emailed (
 
 $tables[] = "CREATE TABLE pbb_emailmessages (
   id int(9) NOT NULL AUTO_INCREMENT,
-  title text NOT NULL default '',
+  title text NOT NULL,
   number_messages int(9) NOT NULL DEFAULT '0',
   seconds int(9) NOT NULL DEFAULT '0',
   user_group varchar(200) NOT NULL default '',
-  message longtext NOT NULL default '',
+  message longtext NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
 $tables[] = "CREATE TABLE pbb_email_msg (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(300) NOT NULL default '',
-  text text NOT NULL default '',
+  text text NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
@@ -181,15 +181,15 @@ $tables[] = "CREATE TABLE pbb_extrafield (
   show_in_forum varchar(3) NOT NULL default '',
   required varchar(3) NOT NULL default '',
   type varchar(250) NOT NULL default '',
-  options text NOT NULL default '',
+  options text NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
 $tables[] = "CREATE TABLE pbb_faq (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(200) NOT NULL default '',
-  text longtext NOT NULL default '',
-  description longtext NOT NULL default '',
+  text longtext NOT NULL,
+  description longtext NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
@@ -197,10 +197,10 @@ $tables[] = "CREATE TABLE pbb_feeds (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(250) NOT NULL default '',
   title2 varchar(250) NOT NULL default '',
-  rsslink text NOT NULL default '',
+  rsslink text NOT NULL,
   userid int(10) UNSIGNED NOT NULL DEFAULT '0',
   forumid smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  text mediumtext NOT NULL default '',
+  text mediumtext NOT NULL,
   ttl smallint(5) UNSIGNED NOT NULL DEFAULT '1500',
   options int(10) UNSIGNED NOT NULL DEFAULT '1',
   feeds_time varchar(20) NOT NULL default '',
@@ -314,14 +314,14 @@ $tables[] = "CREATE TABLE pbb_hooks (
   addon_id int(9) NOT NULL DEFAULT '0',
   main_place varchar(250) NOT NULL default '',
   place_of_hook varchar(250) NOT NULL default '',
-  phpcode longtext NOT NULL default '',
+  phpcode longtext NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
 $tables[] = "CREATE TABLE pbb_info (
   id int(9) NOT NULL AUTO_INCREMENT,
   var_name varchar(255) NOT NULL default '',
-  value text NOT NULL default '',
+  value text NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
@@ -341,8 +341,8 @@ $tables[] = "CREATE TABLE pbb_member (
   email varchar(250) NOT NULL default '',
   usergroup int(9) NOT NULL DEFAULT '0',
   membergroupids varchar(250) NOT NULL default '',
-  user_notes mediumtext NOT NULL default '',
-  user_sig mediumtext NOT NULL default '',
+  user_notes mediumtext NOT NULL,
+  user_sig mediumtext NOT NULL,
   user_country varchar(100) NOT NULL default '',
   user_gender varchar(1) NOT NULL default '',
   user_website varchar(100) NOT NULL default '',
@@ -352,10 +352,10 @@ $tables[] = "CREATE TABLE pbb_member (
   posts int(9) NOT NULL DEFAULT '0',
   user_title varchar(300) NOT NULL default '',
   visitor int(9) NOT NULL DEFAULT '0',
-  user_info mediumtext NOT NULL default '',
-  avater_path mediumtext NOT NULL default '',
+  user_info mediumtext NOT NULL,
+  avater_path mediumtext NOT NULL,
   away int(1) NOT NULL DEFAULT '0',
-  away_msg mediumtext NOT NULL default '',
+  away_msg mediumtext NOT NULL,
   new_password varchar(200) NOT NULL default '',
   new_email varchar(250) NOT NULL default '',
   active_number varchar(90) NOT NULL default '',
@@ -367,17 +367,17 @@ $tables[] = "CREATE TABLE pbb_member (
   keepmeon int(9) NOT NULL DEFAULT '0',
   logged varchar(30) NOT NULL default '',
   register_time varchar(50) NOT NULL default '',
-  style_cache text NOT NULL default '',
+  style_cache text NOT NULL,
   style_id_cache int(9) NOT NULL DEFAULT '0',
   should_update_style_cache int(1) NOT NULL DEFAULT '0',
   autoreply int(9) NOT NULL DEFAULT '0',
   autoreply_title varchar(255) NOT NULL default '',
-  autoreply_msg text NOT NULL default '',
+  autoreply_msg text NOT NULL,
   pm_senders int(1) NOT NULL DEFAULT '0',
   pm_senders_msg varchar(255) NOT NULL default '',
   member_ip varchar(20) NOT NULL default '',
-  subject_sig mediumtext NOT NULL default '',
-  reply_sig mediumtext NOT NULL default '',
+  subject_sig mediumtext NOT NULL,
+  reply_sig mediumtext NOT NULL,
   username_style_cache varchar(255) NOT NULL default '',
   review_subject int(1) NOT NULL DEFAULT '0',
   inviter varchar(250) NOT NULL default '',
@@ -395,7 +395,7 @@ $tables[] = "CREATE TABLE pbb_member (
   bday_month int(2) DEFAULT NULL,
   bday_year int(4) DEFAULT NULL,
   profile_viewers int(1) NOT NULL DEFAULT '1',
-  style_sheet_profile longtext NOT NULL default '',
+  style_sheet_profile longtext NOT NULL,
   send_security_code int(1) NOT NULL DEFAULT '0',
   send_security_error_login int(1) NOT NULL DEFAULT '0',
   profile_cover_photo varchar(355) NOT NULL default '',
@@ -413,29 +413,29 @@ $tables[] = "CREATE TABLE pbb_moderators (
 
 $tables[] = "CREATE TABLE pbb_online (
   id int(9) NOT NULL AUTO_INCREMENT,
-  username text NOT NULL default '',
-  path text NOT NULL default '',
+  username text NOT NULL,
+  path text NOT NULL,
   logged varchar(30) NOT NULL default '',
   user_id int(9) NOT NULL DEFAULT '0',
   user_ip varchar(30) NOT NULL default '',
   hide_browse int(1) NOT NULL DEFAULT '0',
   username_style varchar(255) NOT NULL default '',
-  user_location text NOT NULL default '',
+  user_location text NOT NULL,
   subject_show int(1) NOT NULL DEFAULT '0',
   subject_id int(9) NOT NULL DEFAULT '0',
   last_move varchar(30) NOT NULL default '',
   section_id int(9) NOT NULL DEFAULT '0',
   is_bot int(1) NOT NULL DEFAULT '0',
-  bot_name text NOT NULL default '',
+  bot_name text NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
 $tables[] = "CREATE TABLE pbb_pages (
   id int(9) NOT NULL AUTO_INCREMENT,
-  title text NOT NULL default '',
-  html_code longtext NOT NULL default '',
+  title text NOT NULL,
+  html_code longtext NOT NULL,
   sort int(9) NOT NULL DEFAULT '0',
-  link text NOT NULL default '',
+  link text NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
@@ -455,7 +455,7 @@ $tables[] = "CREATE TABLE pbb_phrase_language (
 $tables[] = "CREATE TABLE pbb_pm (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(200) NOT NULL default '',
-  text text NOT NULL default '',
+  text text NOT NULL,
   user_from varchar(250) NOT NULL default '',
   user_to varchar(250) NOT NULL default '',
   user_read varchar(1) NOT NULL default '',
@@ -483,7 +483,7 @@ $tables[] = "CREATE TABLE pbb_pm_lists (
 $tables[] = "CREATE TABLE pbb_poll (
   id int(9) NOT NULL AUTO_INCREMENT,
   qus varchar(350) NOT NULL default '',
-  answers text NOT NULL default '',
+  answers text NOT NULL,
   subject_id int(9) NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
@@ -509,7 +509,7 @@ $tables[] = "CREATE TABLE pbb_rating (
 $tables[] = "CREATE TABLE pbb_reply (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(355) NOT NULL default '',
-  text mediumtext NOT NULL default '',
+  text mediumtext NOT NULL,
   writer varchar(250) NOT NULL default '',
   subject_id int(9) NOT NULL DEFAULT '0',
   stick int(1) NOT NULL DEFAULT '0',
@@ -536,7 +536,7 @@ $tables[] = "CREATE TABLE pbb_reputation (
   reputationdate varchar(250) NOT NULL default '',
   reply_id int(9) NOT NULL DEFAULT '0',
   subject_id int(9) NOT NULL DEFAULT '0',
-  comments text NOT NULL default '',
+  comments text NOT NULL,
   peg_count int(9) NOT NULL DEFAULT '0',
   reputationread smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
@@ -553,7 +553,7 @@ $tables[] = "CREATE TABLE pbb_requests (
 $tables[] = "CREATE TABLE pbb_section (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(455) NOT NULL default '',
-  section_describe text NOT NULL default '',
+  section_describe text NOT NULL,
   parent int(9) NOT NULL DEFAULT '0',
   sort int(5) NOT NULL default '0',
   section_password varchar(50) NOT NULL default '',
@@ -575,17 +575,17 @@ $tables[] = "CREATE TABLE pbb_section (
   sig_iteration int(1) NOT NULL DEFAULT '0',
   subject_num int(9) NOT NULL DEFAULT '0',
   reply_num int(9) NOT NULL DEFAULT '0',
-  forums_cache longtext NOT NULL default '',
-  moderators longtext NOT NULL default '',
-  sectiongroup_cache longtext NOT NULL default '',
-  footer text NOT NULL default '',
-  header text NOT NULL default '',
+  forums_cache longtext NOT NULL,
+  moderators longtext NOT NULL,
+  sectiongroup_cache longtext NOT NULL,
+  footer text NOT NULL,
+  header text NOT NULL,
   review_subject int(1) NOT NULL DEFAULT '0',
   icon varchar(50) NOT NULL default '',
   last_time varchar(60) NOT NULL default '',
   last_reply int(9) NOT NULL DEFAULT '0',
   last_berpage_nm int(9) NOT NULL DEFAULT '0',
-  prefix_subject text NOT NULL default '',
+  prefix_subject text NOT NULL,
   active_prefix_subject int(1) NOT NULL DEFAULT '0',
   forum_title_color varchar(7) NOT NULL default '',
   trash int(1) NOT NULL DEFAULT '0',
@@ -619,7 +619,7 @@ $tables[] = "CREATE TABLE pbb_sectiongroup (
 $tables[] = "CREATE TABLE pbb_smiles (
   id int(9) NOT NULL AUTO_INCREMENT,
   smile_short varchar(200) NOT NULL default '',
-  smile_path text NOT NULL default '',
+  smile_path text NOT NULL,
   smile_type int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
@@ -639,7 +639,7 @@ $tables[] = "CREATE TABLE pbb_style (
 $tables[] = "CREATE TABLE pbb_subject (
   id int(9) NOT NULL AUTO_INCREMENT,
   title varchar(355) NOT NULL default '',
-  text text NOT NULL default '',
+  text text NOT NULL,
   writer varchar(250) NOT NULL default '',
   section int(9) NOT NULL DEFAULT '0',
   write_date varchar(10) NOT NULL default '',
@@ -651,15 +651,15 @@ $tables[] = "CREATE TABLE pbb_subject (
   write_time varchar(25) NOT NULL default '',
   native_write_time int(15) NOT NULL default '0',
   icon varchar(100) NOT NULL default '',
-  subject_describe mediumtext NOT NULL default '',
+  subject_describe mediumtext NOT NULL,
   action_by varchar(400) NOT NULL default '',
   sec_subject int(1) NOT NULL DEFAULT '0',
-  lastreply_cache text NOT NULL default '',
+  lastreply_cache text NOT NULL,
   last_replier varchar(255) NOT NULL default '',
   poll_subject int(1) NOT NULL DEFAULT '0',
   attach_subject int(1) NOT NULL DEFAULT '0',
   actiondate varchar(50) NOT NULL default '',
-  tags_cache text NOT NULL default '',
+  tags_cache text NOT NULL,
   close_reason varchar(355) NOT NULL default '',
   delete_reason varchar(255) NOT NULL default '',
   review_subject int(1) NOT NULL DEFAULT '0',
@@ -668,7 +668,7 @@ $tables[] = "CREATE TABLE pbb_subject (
   rating int(9) NOT NULL DEFAULT '0',
   last_time varchar(60) NOT NULL default '',
   reason_edit varchar(400) NOT NULL default '',
-  prefix_subject text NOT NULL default '',
+  prefix_subject text NOT NULL,
   close_poll_subject int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
@@ -720,8 +720,8 @@ $tables[] = "CREATE TABLE pbb_templates_edits (
   addon_id int(9) NOT NULL DEFAULT '0',
   template_name varchar(250) NOT NULL default '',
   action varchar(250) NOT NULL default '',
-  old_text longtext NOT NULL default '',
-  text longtext NOT NULL default '',
+  old_text longtext NOT NULL,
+  text longtext NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
@@ -754,9 +754,9 @@ $tables[] = "CREATE TABLE pbb_topicmod (
   title_st varchar(350) NOT NULL DEFAULT '',
   title_end varchar(350) NOT NULL DEFAULT '',
   reply tinyint(1) NOT NULL DEFAULT '0',
-  reply_content text NOT NULL default '',
+  reply_content text NOT NULL,
   approve tinyint(1) NOT NULL DEFAULT '0',
-  forums text NOT NULL default '',
+  forums text NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM";
 
@@ -809,7 +809,7 @@ $tables[] = "CREATE TABLE pbb_warnlog (
   id int(9) NOT NULL AUTO_INCREMENT,
   warn_from varchar(200) NOT NULL default '',
   warn_to varchar(200) NOT NULL default '',
-  warn_text longtext NOT NULL default '',
+  warn_text longtext NOT NULL,
   warn_date varchar(200) NOT NULL default '',
   warn_liftdate varchar(200) NOT NULL default '',
   PRIMARY KEY (id)
