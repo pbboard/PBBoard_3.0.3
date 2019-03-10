@@ -64,11 +64,14 @@ class PowerBBSQL
 		if(function_exists('mysqli_connect'))
 		{
             $connect = mysqli_connect($this->host,$this->db_username,$this->db_password,$this->db_name);
-            mysqli_set_charset($connect, $this->encoding);
+            @mysqli_set_charset($connect, $this->encoding);
+            $result = @mysqli_query($connect, "SET @@session.sql_mode=''");
+            $row = @mysqli_fetch_assoc($result);
+			@mysqli_free_result($result);
 		}
 		else
 		{
-          die ('function mysqli_connect() called though not supported in the PHP build');
+          die ('mysqli_connect function does not exist, is mysqli extension installed?');
 		}
 
 		if (!$connect)

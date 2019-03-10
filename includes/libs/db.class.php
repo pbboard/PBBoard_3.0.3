@@ -85,8 +85,10 @@ class PowerBBSQL
 	function sql_select_db()
 	{
 		$select = mysql_select_db($this->db_name);
-        mysql_query("set character_set_server='".$this->encoding."'");
-        mysql_query("set names '".$this->encoding."'");
+        @mysql_query("set character_set_server='".$this->encoding."'");
+        @mysql_query("set names '".$this->encoding."'");
+		@mysql_query("SELECT @@session.sql_mode=''", $this->sql_connect);
+
 		$this->_from = 'select';
 
 		if (!$select)

@@ -254,7 +254,8 @@ class PowerBBRecords
 		{
 		$encoding     = $config['db']['encoding'];
 		}
-		mysqli_set_charset($connect, $encoding);
+		@mysqli_set_charset($connect, $encoding);
+		@mysqli_query($connect, "SET @@session.sql_mode=''");
 		$query = mysqli_query($connect,$query_string);
 		$insert_id = (mysqli_insert_id($connect));
 		@session_start();

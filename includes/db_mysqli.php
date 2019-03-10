@@ -288,10 +288,11 @@ class DB_MySQLi implements DB_Base
 		if($success && $this->db_encoding)
 		{
 			@mysqli_set_charset($this->read_link, $this->db_encoding);
-
+            @mysqli_query($this->read_link, "SET @@session.sql_mode=''");
 			if($slave_success && count($this->connections) > 1)
 			{
 				@mysqli_set_charset($this->write_link, $this->db_encoding);
+				@mysqli_query($this->write_link, "SET @@session.sql_mode=''");
 			}
 		}
 		return $success;
