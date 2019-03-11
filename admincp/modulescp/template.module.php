@@ -248,9 +248,9 @@ class PowerBBCoreMOD extends _functions
 			$TemplateEdit = $PowerBB->core->GetInfo($TemplateEditArr,'template');
 
             $templates_dir = ("../cache/templates_cache/".$TemplateEdit['title']."_".$TemplateEdit['styleid'].".php");
-	    	$fp = fopen($templates_dir,'w');
-	    	$fw = fwrite($fp,$TemplateEdit['template']);
-    		 fclose($fp);
+	    	$fp = @fopen($templates_dir,'w');
+	    	$fw = @fwrite($fp,$TemplateEdit['template']);
+    		  @fclose($fp);
 
 			$PowerBB->functions->msg($PowerBB->_CONF['template']['_CONF']['lang']['Template_has_been_added_successfully']);
 	     	$PowerBB->functions->redirect('index.php?page=template&amp;edit=1&amp;main=1&amp;templateid=' . $TemplateEdit['templateid'] . '&amp;styleid='.$PowerBB->_POST['style']);
@@ -421,9 +421,9 @@ class PowerBBCoreMOD extends _functions
 
 
 				     $filename = 'templates.xml';
-				     $fp = fopen($filename,'w');
-				     $fw = fwrite($fp,$context);
-                      fclose($fp);
+				     $fp = @fopen($filename,'w');
+				     $fw = @fwrite($fp,$context);
+                       @fclose($fp);
 			}
 
 
@@ -509,9 +509,9 @@ class PowerBBCoreMOD extends _functions
 			$TemplateEdit = $PowerBB->core->GetInfo($TemplateEditArr,'template');
 
             $templates_dir = ("../cache/templates_cache/".$TemplateEdit['title']."_".$TemplateEdit['styleid'].".php");
-	    	$fp = fopen($templates_dir,'w+');
-	    	$fw = fwrite($fp,$TemplateEdit['template']);
-    		 fclose($fp);
+	    	$fp = @fopen($templates_dir,'w+');
+	    	$fw = @fwrite($fp,$TemplateEdit['template']);
+    		  @fclose($fp);
 			$PowerBB->functions->msg($PowerBB->_CONF['template']['_CONF']['lang']['Template_has_been_updated_successfully']);
 			$PowerBB->functions->redirect('index.php?page=template&edit=1&main=1&templateid=' . $TemplateEdit['templateid'] . '&styleid=' .$TemplateEdit['styleid']);
     	}
@@ -553,7 +553,7 @@ class PowerBBCoreMOD extends _functions
 			if (file_exists($originalfile))
 			{
 
-			   $xml_code = file_get_contents($originalfile);
+			   $xml_code = @file_get_contents($originalfile);
 
 			}
 
@@ -655,7 +655,7 @@ class PowerBBCoreMOD extends _functions
 			if (file_exists($originalfile))
 			{
 
-			   $xml_code = file_get_contents($originalfile);
+			   $xml_code = @file_get_contents($originalfile);
 
 			}
 			if (strstr($xml_code,'decode="0"'))
@@ -725,9 +725,9 @@ class PowerBBCoreMOD extends _functions
 			$TemplateEdit = $PowerBB->core->GetInfo($TemplateEditArr,'template');
 
             $templates_dir = ("../cache/templates_cache/".$TemplateEdit['title']."_".$TemplateEdit['styleid'].".php");
-	    	$fp = fopen($templates_dir,'w+');
-	    	$fw = fwrite($fp,$TemplateEdit['template']);
-    		 fclose($fp);
+	    	$fp = @fopen($templates_dir,'w+');
+	    	$fw = @fwrite($fp,$TemplateEdit['template']);
+    		  @fclose($fp);
 
 		    $PowerBB->functions->msg($PowerBB->_CONF['template']['_CONF']['lang']['retrieved_template_origin']);
 			$PowerBB->functions->redirect('index.php?page=template&edit=1&main=1&templateid=' . $PowerBB->_GET['templateid'] . '&styleid=' .$TemplateEdit['styleid']);
@@ -749,7 +749,7 @@ class PowerBBCoreMOD extends _functions
 			if (file_exists($originalfile))
 			{
 
-			   $xml_code = file_get_contents($originalfile);
+			   $xml_code = @file_get_contents($originalfile);
 
 			}
 			if (strstr($xml_code,'decode="0"'))
@@ -799,7 +799,7 @@ class PowerBBCoreMOD extends _functions
 
 							if (file_exists($templates_dir))
 							{
-						 	 $cache_del = unlink($templates_dir);
+						 	 $cache_del = @unlink($templates_dir);
 							}
 
 						$TemplateArr 			= 	array();
@@ -846,7 +846,7 @@ class PowerBBCoreMOD extends _functions
 				$templates_dir = ("../cache/templates_cache/".$row1['title']."_".$row1['styleid'].".php");
 				if (file_exists($templates_dir))
 				{
-				$cache_del = unlink($templates_dir);
+				$cache_del = @unlink($templates_dir);
 				}
 
 			$TemplateArr 			= 	array();
@@ -884,7 +884,7 @@ class PowerBBCoreMOD extends _functions
 
 			if (file_exists($templates_dir))
 			{
-		 	$cache_del = unlink($templates_dir);
+		 	$cache_del = @unlink($templates_dir);
 			}
 
 			$DelArr 			= 	array();
@@ -957,7 +957,7 @@ class PowerBBCoreMOD extends _functions
 						continue;
 					}
 
-					$del = unlink('./' . $StyleInfo['cache_path'] . '/' . $file);
+					$del = @unlink('./' . $StyleInfo['cache_path'] . '/' . $file);
 
                      if ($del)
                      {
@@ -997,7 +997,7 @@ class PowerBBCoreMOD extends _functions
 						continue;
 					}
 
-					$del = unlink('./' . $TemplatesList . $file);
+					$del = @unlink('./' . $TemplatesList . $file);
 
                      if ($del)
                      {
@@ -1186,9 +1186,9 @@ class PowerBBCoreMOD extends _functions
 			$TemplateEdit = $PowerBB->core->GetInfo($TemplateEditArr,'template');
 
             $templates_dir = ("../cache/templates_cache/".$TemplateEdit['title']."_".$TemplateEdit['styleid'].".php");
-	    	$fp = fopen($templates_dir,'w+');
-	    	$fw = fwrite($fp,$TemplateEdit['template']);
-    		 fclose($fp);
+	    	$fp = @fopen($templates_dir,'w+');
+	    	$fw = @fwrite($fp,$TemplateEdit['template']);
+    		  @fclose($fp);
 			$PowerBB->functions->msg($PowerBB->_CONF['template']['_CONF']['lang']['Template_has_been_updated_successfully']);
 			$PowerBB->functions->redirect('index.php?page=template&control=1&show=1&id=' .$TemplateEdit['styleid']);
     	}

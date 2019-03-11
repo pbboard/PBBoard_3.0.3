@@ -228,22 +228,22 @@ class FeedParser{
 			//return false;
 		}
 
-		if($content = file_get_contents($this->url))
+		if($content = @file_get_contents($this->url))
 		{
 			return $content;
 		}
 		else
 		{
-			$ch         = curl_init();
+			$ch         = @curl_init();
 
-			curl_setopt($ch, CURLOPT_URL, $this->url);
-			curl_setopt($ch, CURLOPT_HEADER, false);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			@curl_setopt($ch, CURLOPT_URL, $this->url);
+			@curl_setopt($ch, CURLOPT_HEADER, false);
+			@curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-			$content    = curl_exec($ch);
-			$error      = curl_error($ch);
+			$content    = @curl_exec($ch);
+			$error      = @curl_error($ch);
 
-			curl_close($ch);
+			@curl_close($ch);
 
 			if($content)
 			{

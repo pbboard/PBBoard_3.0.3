@@ -1101,7 +1101,7 @@ class PowerBBCoreMOD
 
 	      if (file_exists($MemberInfo['avater_path']))
 	      {
-		   $del = unlink($MemberInfo['avater_path']);
+		   $del = @unlink($MemberInfo['avater_path']);
           }
 
 			$PowerBB->_CONF['param']['UpdateArr']['path'] = '';
@@ -1740,7 +1740,7 @@ class PowerBBCoreMOD
 
 		      if (file_exists($Attachinfo['filepath']))
 		      {
-			   $del = unlink($Attachinfo['filepath']);
+			   $del = @unlink($Attachinfo['filepath']);
               }
 
 		      if ($Attachinfo['u_id'] != $PowerBB->_CONF['member_row']['id'])

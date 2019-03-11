@@ -314,7 +314,7 @@ class PowerBBStyleMOD extends _functions
 		      $templates_dir = ("../cache/templates_cache/".$row1['title']."_".$row1['styleid'].".php");
 			if (file_exists($templates_dir))
 			{
-			  $cache_del = unlink($templates_dir);
+			  $cache_del = @unlink($templates_dir);
 			}
 
 		}
@@ -354,7 +354,7 @@ class PowerBBStyleMOD extends _functions
 					$PowerBB->functions->error_no_foot($PowerBB->_CONF['template']['_CONF']['lang']['error_xml_file']);
 				}
 
-			   $xml_code = file_get_contents("../".$PowerBB->_POST['serverfile']);
+			   $xml_code = @file_get_contents("../".$PowerBB->_POST['serverfile']);
 
 			}
 
@@ -377,7 +377,7 @@ class PowerBBStyleMOD extends _functions
 				$PowerBB->functions->error_no_foot($PowerBB->_CONF['template']['_CONF']['lang']['is_unable_permison_folder_cache'].' '.$PowerBB->_FILES['files']['tmp_name']);
 			}
 
-			$xml_code = file_get_contents($uploads_dir.'/'.$PowerBB->_FILES['files']['name']);
+			$xml_code = @file_get_contents($uploads_dir.'/'.$PowerBB->_FILES['files']['name']);
 
 		}
 
@@ -420,7 +420,7 @@ class PowerBBStyleMOD extends _functions
 
 			if (file_exists($singleoriginalfile))
 			{
-			   $xml_code = file_get_contents($singleoriginalfile);
+			   $xml_code = @file_get_contents($singleoriginalfile);
 			}
        		$import_original = $PowerBB->functions->xml_array($xml_code_original);
 			$SingleTemplates = $import_original['templategroup'];
@@ -504,7 +504,7 @@ class PowerBBStyleMOD extends _functions
 					$AddonsMod = new PowerBBAddonsMOD();
 					foreach ($Addons as $key => $addonrow )
 					{
-						$xml_code = file_get_contents('../addons/'.$addonrow['name']);
+						$xml_code = @file_get_contents('../addons/'.$addonrow['name']);
 						$plugin = $PowerBB->addons->xml_to_array($xml_code);
 						if(is_array($plugin['plugin']['templates']))
 						{
@@ -515,7 +515,7 @@ class PowerBBStyleMOD extends _functions
 				}
 
 				  // Delete the temporary file if possible
-					unlink($uploads_dir.'/'.$PowerBB->_FILES['files']['name']);
+					@unlink($uploads_dir.'/'.$PowerBB->_FILES['files']['name']);
 				$PowerBB->functions->redirect2('index.php?page=style&amp;control=1&amp;main=1',3);
 
 			}

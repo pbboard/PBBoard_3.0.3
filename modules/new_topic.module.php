@@ -48,23 +48,23 @@ class PowerBBTopicAddMOD
 		$filecke_preview = "look/ckeditor/plugins/preview/preview.html";
 		if (file_exists($fileJsvk_popup))
 		{
-		$delJsvkpopup = unlink($fileJsvk_popup);
+		$delJsvkpopup = @unlink($fileJsvk_popup);
 		}
 		if (file_exists($fileJsvk_iframe))
 		{
-		$delJsvkiframe = unlink($fileJsvk_iframe);
+		$delJsvkiframe = @unlink($fileJsvk_iframe);
 		}
 		if (file_exists($filewsc_ciframe))
 		{
-		$delciframe = unlink($filewsc_ciframe);
+		$delciframe = @unlink($filewsc_ciframe);
 		}
 		if (file_exists($filewsc_tmpFrameset))
 		{
-		$deltmpFrameset = unlink($filewsc_tmpFrameset);
+		$deltmpFrameset = @unlink($filewsc_tmpFrameset);
 		}
 		if (file_exists($filecke_preview))
 		{
-		$delpreview = unlink($filecke_preview);
+		$delpreview = @unlink($filecke_preview);
 		}
 
 	   }

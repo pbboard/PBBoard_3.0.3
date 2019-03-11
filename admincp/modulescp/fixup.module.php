@@ -842,10 +842,10 @@ class PowerBBFixMOD
 
          if(!$last_time_updates)
 		 {
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $pbboard_last_time_updates);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			$last_time_updates = curl_exec($ch);
+			$ch = @curl_init();
+			@curl_setopt($ch, CURLOPT_URL, $pbboard_last_time_updates);
+			@curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$last_time_updates = @curl_exec($ch);
 		 }
 
 		$arr = explode('-',$last_time_updates);
@@ -880,7 +880,7 @@ class PowerBBFixMOD
           }
          $zip->close();
 		$PowerBB->info->UpdateInfo(array('value'=>$PowerBB->_CONF['now'],'var_name'=>'last_time_updates'));
-		unlink($file);
+		@unlink($file);
 		echo $PowerBB->_CONF['template']['_CONF']['lang']['pbboard_updated'];
 		}
 		else

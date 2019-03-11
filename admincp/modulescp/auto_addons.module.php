@@ -571,7 +571,7 @@ function _DelStart()
 
 						if (file_exists($templates_dir))
 						{
-					 	 $cache_del = unlink($templates_dir);
+					 	 $cache_del = @unlink($templates_dir);
 						}
 					}
 				 }
@@ -602,7 +602,7 @@ function _DelStart()
 
 						if (file_exists($templates_dir))
 						{
-					 	 $cache_del = unlink($templates_dir);
+					 	 $cache_del = @unlink($templates_dir);
 						}
 					}
 
@@ -635,7 +635,7 @@ function _DelStart()
 
 						if (file_exists($templates_dir))
 						{
-					 	 $cache_del = unlink($templates_dir);
+					 	 $cache_del = @unlink($templates_dir);
 						}
 					}
 
@@ -727,7 +727,7 @@ function _DelStart()
 
 						if (file_exists($templates_dir))
 						{
-					 	 $cache_del = unlink($templates_dir);
+					 	 $cache_del = @unlink($templates_dir);
 						}
 					}
 
@@ -759,7 +759,7 @@ function _DelStart()
 
 						if (file_exists($templates_dir))
 						{
-					 	 $cache_del = unlink($templates_dir);
+					 	 $cache_del = @unlink($templates_dir);
 						}
 					}
 
@@ -792,7 +792,7 @@ function _DelStart()
 
 						if (file_exists($templates_dir))
 						{
-					 	 $cache_del = unlink($templates_dir);
+					 	 $cache_del = @unlink($templates_dir);
 						}
 					}
 
@@ -1056,7 +1056,7 @@ function _DelStart()
 								$templates_dir = ("../cache/templates_cache/".$Templattitle."_".$StyleId.".php");
 								if (file_exists($templates_dir))
 								{
-							 	 $cache_del = unlink($templates_dir);
+							 	 $cache_del = @unlink($templates_dir);
 								}
 							}
 							elseif($Templates['attributes']['type'] == 'replace')
@@ -1085,7 +1085,7 @@ function _DelStart()
 
 									if (file_exists($templates_dir))
 									{
-								 	 $cache_del = unlink($templates_dir);
+								 	 $cache_del = @unlink($templates_dir);
 									}
 								}
 
@@ -1120,7 +1120,7 @@ function _DelStart()
 
 									if (file_exists($templates_dir))
 									{
-								 	 $cache_del = unlink($templates_dir);
+								 	 $cache_del = @unlink($templates_dir);
 									}
 								}
 							}
@@ -1154,7 +1154,7 @@ function _DelStart()
 									$templates_dir = ("../cache/templates_cache/".$Templattitle."_".$StyleId.".php");
 									if (file_exists($templates_dir))
 									{
-								 	 $cache_del = unlink($templates_dir);
+								 	 $cache_del = @unlink($templates_dir);
 									}
 								}
 								elseif($Template['attributes']['type'] == 'replace')
@@ -1183,7 +1183,7 @@ function _DelStart()
 
 										if (file_exists($templates_dir))
 										{
-									 	 $cache_del = unlink($templates_dir);
+									 	 $cache_del = @unlink($templates_dir);
 										}
 									}
 
@@ -1215,7 +1215,7 @@ function _DelStart()
 
 										if (file_exists($templates_dir))
 										{
-									 	 $cache_del = unlink($templates_dir);
+									 	 $cache_del = @unlink($templates_dir);
 										}
 									}
 

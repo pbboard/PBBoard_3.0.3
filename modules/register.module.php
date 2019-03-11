@@ -1,5 +1,5 @@
 <?php
-session_start();
+@session_start();
 
 $CALL_SYSTEM				=	array();
 $CALL_SYSTEM['BANNED'] 		= 	true;
@@ -190,31 +190,31 @@ class PowerBBRegisterMOD
 		$X = explode('/',$PowerBB->_SERVER['HTTP_HOST']);
 		if (function_exists("file_get_contents")) {
 
-		if (stristr(file_get_contents("http://www.stopforumspam.com/api?ip=" .$PowerBB->_SERVER['REMOTE_ADDR']), "yes")) {
+		if (stristr(@file_get_contents("http://www.stopforumspam.com/api?ip=" .$PowerBB->_SERVER['REMOTE_ADDR']), "yes")) {
 		exit('spammer ip');
 		}
 
-		if (stristr(file_get_contents("http://www.stopforumspam.com/api?email=" .$PowerBB->_POST['email']), "yes")) {
+		if (stristr(@file_get_contents("http://www.stopforumspam.com/api?email=" .$PowerBB->_POST['email']), "yes")) {
 		exit('spammer email');
 		}
 		} else {
 		if (function_exists("curl_init")) {
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_URL, "http://www.stopforumspam.com/api?ip=" .$PowerBB->_SERVER['REMOTE_ADDR']);
+		$ch = @curl_init();
+		@curl_setopt($ch, CURLOPT_HEADER, 0);
+		@curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		@curl_setopt($ch, CURLOPT_URL, "http://www.stopforumspam.com/api?ip=" .$PowerBB->_SERVER['REMOTE_ADDR']);
 
-		if (stristr(curl_exec($ch), "yes")) {
+		if (stristr(@curl_exec($ch), "yes")) {
 		exit('spammer ip');
 		}
 
-		curl_setopt($ch, CURLOPT_URL, "http://www.stopforumspam.com/api?email=" .$PowerBB->_POST['email']);
+		@curl_setopt($ch, CURLOPT_URL, "http://www.stopforumspam.com/api?email=" .$PowerBB->_POST['email']);
 
-		if (stristr(curl_exec($ch), "yes")) {
+		if (@stristr(@curl_exec($ch), "yes")) {
 		exit('spammer email');
 		}
 
-		curl_close($ch);
+		@curl_close($ch);
 		}
 		elseif ($Y[2] != $X[0])
 		{
@@ -343,13 +343,13 @@ class PowerBBRegisterMOD
 
 			if (function_exists('mb_strlen'))
 			{
-				$reg_less_num = mb_strlen($PowerBB->_POST['username'], 'UTF-8') >= $PowerBB->_CONF['info_row']['reg_less_num'];
-				$reg_max_num = mb_strlen($PowerBB->_POST['username'], 'UTF-8') <= $PowerBB->_CONF['info_row']['reg_max_num'];
+				$reg_less_num = @mb_strlen($PowerBB->_POST['username'], 'UTF-8') >= $PowerBB->_CONF['info_row']['reg_less_num'];
+				$reg_max_num = @mb_strlen($PowerBB->_POST['username'], 'UTF-8') <= $PowerBB->_CONF['info_row']['reg_max_num'];
 			}
 			else
 			{
-				$reg_less_num = strlen(utf8_decode($PowerBB->_POST['username'])) >= $PowerBB->_CONF['info_row']['reg_less_num'];
-				$reg_max_num = strlen(utf8_decode($PowerBB->_POST['username'])) <= $PowerBB->_CONF['info_row']['reg_max_num'];
+				$reg_less_num = strlen(@utf8_decode($PowerBB->_POST['username'])) >= $PowerBB->_CONF['info_row']['reg_less_num'];
+				$reg_max_num = strlen(@utf8_decode($PowerBB->_POST['username'])) <= $PowerBB->_CONF['info_row']['reg_max_num'];
 			}
 
 		   if($reg_less_num)
@@ -854,8 +854,8 @@ class PowerBBRegisterMOD
 			}
 			else
 			{
-				$reg_less_num = strlen(utf8_decode($PowerBB->_POST['username'])) >= $PowerBB->_CONF['info_row']['reg_less_num'];
-				$reg_max_num = strlen(utf8_decode($PowerBB->_POST['username'])) <= $PowerBB->_CONF['info_row']['reg_max_num'];
+				$reg_less_num = strlen(@utf8_decode($PowerBB->_POST['username'])) >= $PowerBB->_CONF['info_row']['reg_less_num'];
+				$reg_max_num = strlen(@utf8_decode($PowerBB->_POST['username'])) <= $PowerBB->_CONF['info_row']['reg_max_num'];
 
 			}
 

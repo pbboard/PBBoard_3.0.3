@@ -2933,10 +2933,10 @@ function gzip_encode($contents, $level=1)
         $Version = $PowerBB->_CONF['info_row']['MySBB_version'];
         $pbboard_last_time_updates = 'http://www.pbboard.info/check_updates/pbboard_last_time_updates_303.txt';
 
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $pbboard_last_time_updates);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			$last_time_updates = curl_exec($ch);
+			$ch = @curl_init();
+			@curl_setopt($ch, CURLOPT_URL, $pbboard_last_time_updates);
+			@curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$last_time_updates = @curl_exec($ch);
 
          if(!$last_time_updates)
 		 {
@@ -2969,10 +2969,10 @@ function gzip_encode($contents, $level=1)
          // Check if this version is up to date
          $LatestVersionUrl = ("http://www.pbboard.info/pbboard_latest_version.txt");
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $LatestVersionUrl);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		$LatestVersionTxt = curl_exec($ch);
+		$ch = @curl_init();
+		@curl_setopt($ch, CURLOPT_URL, $LatestVersionUrl);
+		@curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$LatestVersionTxt = @curl_exec($ch);
 
          if(!$LatestVersionTxt)
 		 {

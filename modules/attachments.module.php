@@ -378,7 +378,7 @@ class PowerBBCoreMOD
 
 		   	 if (file_exists($Attachinfo['filepath']))
 		      {
-			   $del = unlink($Attachinfo['filepath']);
+			   $del = @unlink($Attachinfo['filepath']);
               }
 
 	        // Delete attachment to the database
@@ -656,7 +656,7 @@ class PowerBBCoreMOD
 
 			  if (file_exists($Attachinfo['filepath']))
 		      {
-			   $del = unlink($Attachinfo['filepath']);
+			   $del = @unlink($Attachinfo['filepath']);
               }
 
 		        // Delete attachment to the database
@@ -871,7 +871,7 @@ class PowerBBCoreMOD
 
 		   	if (file_exists($Attachinfo['filepath']))
 		      {
-			   $del = unlink($Attachinfo['filepath']);
+			   $del = @unlink($Attachinfo['filepath']);
               }
 
 
@@ -1110,7 +1110,7 @@ class PowerBBCoreMOD
 
 		   	if (file_exists($Attachinfo['filepath']))
 		      {
-			   $del = unlink($Attachinfo['filepath']);
+			   $del = @unlink($Attachinfo['filepath']);
               }
 
 

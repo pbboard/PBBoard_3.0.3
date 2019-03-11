@@ -53,7 +53,7 @@ class PowerBBLoginMOD
 
 		if ($IsMember)
 		{
-			header("Location:".$PowerBB->_SERVER['HTTP_REFERER']);
+			@header("Location:".$PowerBB->_SERVER['HTTP_REFERER']);
 			exit;
 		}
 		else
@@ -64,9 +64,9 @@ class PowerBBLoginMOD
              $PowerBB->_COOKIE['pbb_entries_error'] = "1";
              }
 			$pbb_entries_error = $PowerBB->_COOKIE['pbb_entries_error']+1;
-			ob_start();
-			setcookie("pbb_entries_error",$pbb_entries_error, time()+900);
-			ob_end_flush();
+			@ob_start();
+			@setcookie("pbb_entries_error",$pbb_entries_error, time()+900);
+			@ob_end_flush();
 			$PowerBB->_CONF['template']['_CONF']['lang']['message_entries_error'] = str_replace('{err}', $PowerBB->_COOKIE['pbb_entries_error'], $PowerBB->_CONF['template']['_CONF']['lang']['message_entries_error']);
 			$PowerBB->_CONF['template']['_CONF']['lang']['message_entries_error'] = str_replace('{dferr}', $PowerBB->_CONF['info_row']['num_entries_error'], $PowerBB->_CONF['template']['_CONF']['lang']['message_entries_error']);
 
