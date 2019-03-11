@@ -339,11 +339,11 @@ class PowerBBFunctions
 							}
 
 
-								if (!strstr($forum['writer_photo'],'http')
+								if (!@strstr($forum['writer_photo'],'http')
 									or !strstr($forum['writer_photo'],'www.'))
 								{
-									if (strstr($forum['writer_photo'],'download/avatar/')
-									or strstr($forum['writer_photo'],'look/images/avatar/'))
+									if (@strstr($forum['writer_photo'],'download/avatar/')
+									or @strstr($forum['writer_photo'],'look/images/avatar/'))
 									{
 									 $forum['writer_photo'] = $this->GetForumAdress().$forum['writer_photo'];
 									}
@@ -357,9 +357,9 @@ class PowerBBFunctions
                               $http_www_  = "http://www.".$PowerBB->_SERVER['HTTP_HOST'];
 
 	       					  $forum['writer_photo'] = str_replace($http_, $https_, $forum['writer_photo']);
-							  $forum['writer_photo'] = str_ireplace($http_, $https_, $forum['writer_photo']);
+							  $forum['writer_photo'] = @str_ireplace($http_, $https_, $forum['writer_photo']);
 	       					  $forum['writer_photo'] = str_replace($http_www_, $httpswww_, $forum['writer_photo']);
-							  $forum['writer_photo'] = str_ireplace($http_www_, $httpswww_, $forum['writer_photo']);
+							  $forum['writer_photo'] = @str_ireplace($http_www_, $httpswww_, $forum['writer_photo']);
                              }
 
                              $forum['writer_photo'] = str_replace($this->GetForumAdress().$this->GetForumAdress(), $this->GetForumAdress(), $forum['writer_photo']);
@@ -544,7 +544,7 @@ class PowerBBFunctions
  	{
 	     global $PowerBB;
 		$url = str_replace('&amp;', '&', $url); // prevent possible oddity
-		if (strpos($url, "\r\n") !== false)
+		if (@strpos($url, "\r\n") !== false)
 		{
 			trigger_error("Header may not contain more than a single header, new line detected.", E_USER_ERROR);
 		}
@@ -553,7 +553,7 @@ class PowerBBFunctions
 			$redirectcode = 302;
 		}
         $url = $PowerBB->functions->rewriterule($url);
-		 header("Location: $url", 0, $redirectcode);
+		 @header("Location: $url", 0, $redirectcode);
 	  	 exit;
  	}
 	/**
@@ -656,25 +656,25 @@ class PowerBBFunctions
             // Email invalid because wrong number of characters in one section, or wrong number of @ symbols.
             return false;
         }
-	    if (strstr($email,'"')
-		or strstr($email,"'")
-		or strstr($email,'>')
-		or strstr($email,'<')
-		or strstr($email,'*')
-		or strstr($email,'%')
-		or strstr($email,'$')
-		or strstr($email,'#')
-		or strstr($email,'+')
-		or strstr($email,'^')
-		or strstr($email,'&')
-		or strstr($email,',')
-		or strstr($email,'~')
-		or strstr($email,'!')
-		or strstr($email,'{')
-		or strstr($email,'}')
-		or strstr($email,'(')
-		or strstr($email,')')
-		or strstr($email,'/'))
+	    if (@strstr($email,'"')
+		or @strstr($email,"'")
+		or @strstr($email,'>')
+		or @strstr($email,'<')
+		or @strstr($email,'*')
+		or @strstr($email,'%')
+		or @strstr($email,'$')
+		or @strstr($email,'#')
+		or @strstr($email,'+')
+		or @strstr($email,'^')
+		or @strstr($email,'&')
+		or @strstr($email,',')
+		or @strstr($email,'~')
+		or @strstr($email,'!')
+		or @strstr($email,'{')
+		or @strstr($email,'}')
+		or @strstr($email,'(')
+		or @strstr($email,')')
+		or @strstr($email,'/'))
       	{
            return false;
         }
@@ -1093,9 +1093,9 @@ class PowerBBFunctions
  		global $PowerBB;
 		$dir =($PowerBB->_SERVER['PHP_SELF']);
 		// delet admincp folder name from dir
-		$dir = str_ireplace($PowerBB->admincpdir."/", '', $dir);
+		$dir = @str_ireplace($PowerBB->admincpdir."/", '', $dir);
 		$dir = 	explode('/',$dir);
-		$dir = str_ireplace("index.php/", '', $dir);
+		$dir = @str_ireplace("index.php/", '', $dir);
         if(isset($dir[2]))
         {
  		$url = $PowerBB->_SERVER['HTTP_HOST'].'/'.$dir[1].'/'.$dir[2].'/';
@@ -1113,11 +1113,11 @@ class PowerBBFunctions
  		$url = $PowerBB->_SERVER['HTTP_HOST'].'/'.$dir[1].'/';
         }
 
- 		$url = str_ireplace("index.php/", '', $url);
- 		$url = str_ireplace("upload.php/", '', $url);
+ 		$url = @str_ireplace("index.php/", '', $url);
+ 		$url = @str_ireplace("upload.php/", '', $url);
  		$url = str_replace("index.php/", '', $url);
  		$url = str_replace("upload.php/", '', $url);
-		//$url = preg_replace('#/.*(.*).php.*#iU', "", $url);
+		//$url = @preg_replace('#/.*(.*).php.*#iU', "", $url);
 		// Get server port
 		if (isset($PowerBB->_SERVER['HTTPS']) &&
 		    ($PowerBB->_SERVER['HTTPS'] == 'on' || $PowerBB->_SERVER['HTTPS'] == 1) ||
@@ -1160,10 +1160,10 @@ class PowerBBFunctions
  		global $PowerBB;
 		$dir =($PowerBB->_SERVER['PHP_SELF']);
 		// delet admincp folder name from dir
-		$dir = str_ireplace($PowerBB->admincpdir."/", '', $dir);
+		$dir = @str_ireplace($PowerBB->admincpdir."/", '', $dir);
 		$dir = 	explode('/',$dir);
-		$dir[1] = str_ireplace("index.php/", '', $dir[1]);
-		$PowerBB->_SERVER['DOCUMENT_ROOT'] = str_ireplace("index.php/", '', $PowerBB->_SERVER['DOCUMENT_ROOT']);
+		$dir[1] = @str_ireplace("index.php/", '', $dir[1]);
+		$PowerBB->_SERVER['DOCUMENT_ROOT'] = @str_ireplace("index.php/", '', $PowerBB->_SERVER['DOCUMENT_ROOT']);
         if(isset($dir[2]))
         {
  		$MianDir = $PowerBB->_SERVER['DOCUMENT_ROOT'].'/'.$dir[1].'/'.$dir[2].'/';
@@ -1180,7 +1180,7 @@ class PowerBBFunctions
         {
  		$MianDir = $PowerBB->_SERVER['DOCUMENT_ROOT'].'/'.$dir[1].'/';
         }
- 		$MianDir = str_ireplace("index.php/", '', $MianDir);
+ 		$MianDir = @str_ireplace("index.php/", '', $MianDir);
 		$MianDir = preg_replace('#/.*(.*).php/.*#iU', "", $MianDir);
 		$MianDir = preg_replace('#(.*).php.*#iU', "", $MianDir);
  		return $MianDir;
@@ -1191,7 +1191,7 @@ class PowerBBFunctions
  	function RandomCode()
     {
   		$code = rand(1,500) . rand(1,1000) . microtime();
-  		$code = ceil($code);
+  		$code = @ceil($code);
   		$code = base64_encode($code);
   		$code = substr($code,0,15);
   		$code = str_replace('=',rand(1,100),$code);
@@ -1234,7 +1234,7 @@ class PowerBBFunctions
         $headers .= "Cc:$to \r\n";
 		$headers .= "X-Mailer: PHP ".phpversion()."\r\n";
 		$headers .= "X-Priority: 3\r\n";
-        $send = mail($to,$subject,$message,$headers);
+        $send = @mail($to,$subject,$message,$headers);
         return ($send) ? true : false;
  	}
 	/**
@@ -1307,7 +1307,7 @@ class PowerBBFunctions
 		$string = str_replace("   ", " ", $string);
 		$string = str_replace("  ", " ", $string);
         $string = strip_tags($string);
-      	$string = htmlspecialchars($string);
+      	$string = @htmlspecialchars($string);
       	 $string = str_replace("&nbsp;", " ", $string);
       	$string = str_replace("&amp;", "", $string);
       	$string = str_replace("nbsp;", " ", $string);
@@ -1697,7 +1697,7 @@ function CleanText($string)
 				$update .= $PowerBB->DB->sql_query("UPDATE " . $PowerBB->table['info'] . " SET value='$display_forums' WHERE var_name='last_subject_writer_not_in'");
 	      }
        }
-		$PowerBB->_CONF['info_row']['last_subject_writer_not_in'] = str_ireplace('00,','',$PowerBB->_CONF['info_row']['last_subject_writer_not_in']);
+		$PowerBB->_CONF['info_row']['last_subject_writer_not_in'] = @str_ireplace('00,','',$PowerBB->_CONF['info_row']['last_subject_writer_not_in']);
  	}
 	 function checkmobile()
 	 {
@@ -1773,11 +1773,11 @@ function CleanText($string)
 				{
 				   $MemberUpdateArr['where'] = array('id',$PowerBB->_CONF['member_row']['id']);
 				   $change = $PowerBB->member->UpdateMember($MemberUpdateArr);
-					setcookie("PowerBB_style", $mobile_styleid['id'], time()+3600);
+					@setcookie("PowerBB_style", $mobile_styleid['id'], time()+3600);
 				}
 				else
 				{
-					setcookie('PowerBB_style',$mobile_styleid['id'],time()+3600);
+					@setcookie('PowerBB_style',$mobile_styleid['id'],time()+3600);
 				}
                 */
                 @setcookie('PowerBB_style',$mobile_styleid['id'],time()+3600);
@@ -1852,13 +1852,13 @@ function CleanText($string)
 			{
 			   $StyleArr['where'] = array('id',$PowerBB->_CONF['member_row']['id']);
 			   $change = $PowerBB->member->UpdateMember($StyleArr);
-				setcookie("PowerBB_style", $Style, time()+3600);
-		        header("location: ".$PowerBB->_SERVER['HTTP_REFERER']."");
+				@setcookie("PowerBB_style", $Style, time()+3600);
+		        @header("location: ".$PowerBB->_SERVER['HTTP_REFERER']."");
 			}
 			else
 			{
-				setcookie('PowerBB_style',$Style,time()+3600);
-		        header("location: ".$PowerBB->_SERVER['HTTP_REFERER']."");
+				@setcookie('PowerBB_style',$Style,time()+3600);
+		        @header("location: ".$PowerBB->_SERVER['HTTP_REFERER']."");
 			}
            }
        return;
@@ -2528,7 +2528,7 @@ function gzip_encode($contents, $level=1)
 	function _RunFeedRss()
 	{
      	 global $PowerBB;
-	   include('includes/FeedParser.php');
+	   @include('includes/FeedParser.php');
 		$feeds_result = $PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['feeds'] . " WHERE options = '1'");
 		while ($FeedsInfo = $PowerBB->DB->sql_fetch_array($feeds_result))
 		{
@@ -2602,11 +2602,11 @@ function gzip_encode($contents, $level=1)
             }
          }
 		//////////
-		if (($current_memory_limit = $PowerBB->functions->size_to_bytes(ini_get('memory_limit'))) < 128 * 1024 * 1024 AND $current_memory_limit > 0)
+		if (($current_memory_limit = $PowerBB->functions->size_to_bytes(@ini_get('memory_limit'))) < 128 * 1024 * 1024 AND $current_memory_limit > 0)
 		{
-			ini_set('memory_limit', 128 * 1024 * 1024);
+			@ini_set('memory_limit', 128 * 1024 * 1024);
 		}
-		set_time_limit(0);
+		@set_time_limit(0);
    }
      // Visitor Today number
 	function visitor_today_number()
@@ -2616,7 +2616,7 @@ function gzip_encode($contents, $level=1)
 		  {
 		      if (!$PowerBB->_COOKIE[$PowerBB->_CONF['today_cookie']])
 		  	  {
-				setcookie("PowerBB_today_date",$PowerBB->_CONF['date'], time()+3600*24);
+				@setcookie("PowerBB_today_date",$PowerBB->_CONF['date'], time()+3600*24);
 				$number = $PowerBB->_CONF['info_row']['today_number_cache'] + 1;
 				$PowerBB->info->UpdateInfo(array('value'=>$number,'var_name'=>'today_number_cache'));
 			  }
@@ -2637,8 +2637,8 @@ function gzip_encode($contents, $level=1)
 					{
 					 $url = ("../cache/hooks_cache/HooksCache.php");
 					}
-						include($url);
-						$Hooks_number = sizeof($Hooks, 1);
+						@include($url);
+						$Hooks_number = @sizeof($Hooks, 1);
 						if($Hooks_number > 0)
 						{
 							for ($x = 0; $x < $Hooks_number; $x++)
@@ -2669,14 +2669,14 @@ function gzip_encode($contents, $level=1)
 					{
 					 $url = ("../cache/hooks_cache/HooksCache.php");
 					}
-						include($url);
-						$Hooks_number = sizeof($Hooks, 1);
+						@include($url);
+						$Hooks_number = @sizeof($Hooks, 1);
 						if($Hooks_number > 0)
 						{
 							for ($x = 0; $x < $Hooks_number; $x++)
 							{
-								$Hooks[$place_of_hook][$x] = str_replace("\'","'", $Hooks[$place_of_hook][$x]);
-								eval($Hooks[$place_of_hook][$x]);
+								$Hooks[$place_of_hook][$x] = @str_replace("\'","'", $Hooks[$place_of_hook][$x]);
+								@eval($Hooks[$place_of_hook][$x]);
 							}
 						}
 	              }
@@ -2706,22 +2706,22 @@ function gzip_encode($contents, $level=1)
 			// Convert quotes
 		if (phpversion() >= '5.4.0')
 		{
-		  if (get_magic_quotes_gpc())
+		  if (@get_magic_quotes_gpc())
 		   {
 		     return ($string);
 		   }
 		  else
 		  {
-		    return stripslashes($string);
+		    return @stripslashes($string);
 		  }
 		}
 		elseif (phpversion() <= '5.4.0')
 		{
 		  if (phpversion() <= '5.3.0')
 		  {
-			  if (get_magic_quotes_gpc())
+			  if (@get_magic_quotes_gpc())
 			   {
-			    return stripslashes($string);
+			    return @stripslashes($string);
 			   }
 			  else
 			  {
@@ -2730,13 +2730,13 @@ function gzip_encode($contents, $level=1)
 		  }
 		  else
 		  {
-			  if (get_magic_quotes_gpc())
+			  if (@get_magic_quotes_gpc())
 			   {
 				  return ($string);
 			   }
 			  else
 			  {
-			    return stripslashes($string);
+			    return @stripslashes($string);
 			  }
 		  }
 		}
@@ -2755,14 +2755,14 @@ function gzip_encode($contents, $level=1)
 					{
 					 $url = ("../cache/hooks_cache/HooksCache.php");
 					}
-						include($url);
+						@include($url);
 						$Hooks_number = sizeof($Hooks, 1);
 						if($Hooks_number > 0)
 						{
                             for ($x = 0; $x < $Hooks_number; $x++)
                             {
 								$Hooks[$place_of_hook][$x] = str_replace("\'","'", $Hooks[$place_of_hook][$x]);
-                                eval(" ?> ".$Hooks[$place_of_hook][$x]." <?php ");
+                               @eval(" ?> ".$Hooks[$place_of_hook][$x]." <?php ");
 							}
 						}
 	              }
@@ -2844,7 +2844,7 @@ function gzip_encode($contents, $level=1)
       $file_group_cache = "cache/group_cache/group_cache".$param.".php";
 	  if (file_exists($file_group_cache))
 	    {
-			include("cache/group_cache/group_cache".$param.".php");
+			@include("cache/group_cache/group_cache".$param.".php");
 			$Group = unserialize(base64_decode($group_cache));
 			if(isset($Group[$param]))
 			{
@@ -2879,7 +2879,7 @@ function gzip_encode($contents, $level=1)
         $dir = "cache/sectiongroup_cache/sectiongroup_cache_".$forum_id.".php";
         if (file_exists($dir))
         {
-			include($dir);
+			@include($dir);
 			$groups = unserialize(base64_decode($sectiongroup_cache));
 			if (!empty($sectiongroup_cache))
 			{
