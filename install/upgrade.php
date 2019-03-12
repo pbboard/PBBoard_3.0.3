@@ -354,9 +354,7 @@ else
 
 \$config['db']['encoding'] = 'utf8mb4';
 
-?>
-
-";
+?>";
 
 	$file = fopen(PBB_ROOT.'includes/config.php', 'w');
 	fwrite($file, $configdata);

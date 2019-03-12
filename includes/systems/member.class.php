@@ -202,7 +202,7 @@ class PowerBBMember
 
 			setcookie($this->Engine->_CONF['username_cookie'],$param['username'],$param['expire'], NULL ,NULL, NULL, TRUE);
 			setcookie($this->Engine->_CONF['password_cookie'],$param['password'],$param['expire'], NULL ,NULL, NULL, TRUE);
-    		session_start();
+    		@session_start();
             $_SESSION['HTTP_USER_AGENT'] = strtolower(md5($this->Engine->_SERVER['HTTP_USER_AGENT']));
        		return $CheckMember;
        	}

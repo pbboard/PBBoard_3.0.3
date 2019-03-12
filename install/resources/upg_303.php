@@ -58,56 +58,68 @@ function upgrade303_convert_utf8()
     $pass = $config['db']['password'];
     $db = $config['db']['name'];
 
-    $mysqli = new mysqli($host, $user, $pass, $db);
+    $mysqli = mysqli_connect($host, $user, $pass, $db);
+
+	 // Check connection
+	 if (mysqli_connect_errno())
+	  {
+	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	  }
+
+  	//change DEFAULT CHARACTER database to character utf8mb4_unicode_ci
+    mysqli_query($mysqli,"ALTER DATABASE ".$config['db']['name']." CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
 
     //show tables
-    $result = $mysqli->query("SHOW TABLES from ".$db."");
-	//change DEFAULT CHARACTER database to character utf8mb4_unicode_ci
-    $mysqli->query("ALTER DATABASE ".$config['db']['name']." CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
 
-    //print_r($result);
-    while($tableName = mysqli_fetch_row($result))
-    {
-        $table = $tableName[0];
+ if ($result = mysqli_query($mysqli,"SHOW TABLES from ".$db.""))
+  {
+        //print_r($result);
+	    while($tableName = mysqli_fetch_row($result))
+	    {
+	        $table = $tableName[0];
 
-	    if (strstr($table,$config['db']['prefix'])
-		or strstr($table,"main_"))
-      	{
-			// CONVERT ALL TABLES IN A MYSQL DATABASE TO utf8mb4
-			$mysqli->query("ALTER TABLE ".$table." CONVERT TO CHARACTER SET utf8mb4");
+		    if (strstr($table,$config['db']['prefix'])
+			or strstr($table,"main_"))
+	      	{
+				// CONVERT ALL TABLES IN A MYSQL DATABASE TO utf8mb4
+				mysqli_query($mysqli,"ALTER TABLE ".$table." CONVERT TO CHARACTER SET utf8mb4");
 
-	        $result2 = $mysqli->query("SHOW COLUMNS from ".$table.""); //$result2 = mysqli_query($table, 'SHOW COLUMNS FROM') or die("cannot show columns");
-	        if(mysqli_num_rows($result2))
-	        {
-	            while($row2 = mysqli_fetch_row($result2))
-	            {
-	                foreach ($row2 as $key=>$value)
-	                {
-	                    if($value == 'longtext')
+		        $result2 = mysqli_query($mysqli,"SHOW COLUMNS from ".$table.""); //$result2 = mysqli_query($table, 'SHOW COLUMNS FROM') or die("cannot show columns");
+		        if(mysqli_num_rows($result2))
+		        {
+		            while($row2 = mysqli_fetch_row($result2))
+		            {
+		                foreach ($row2 as $key=>$value)
 		                {
-						$mysqli->query('UPDATE ' .$table. ' SET
-						    '.$row2[0].'=convert(cast(convert('.$row2[0].' using  latin1) as binary) using utf8mb4)
-						WHERE 1');
-						 }
-		                elseif(strstr($value,'varchar'))
-		                {
-						$mysqli->query('UPDATE ' .$table. ' SET
-						    '.$row2[0].'=convert(cast(convert('.$row2[0].' using  latin1) as binary) using utf8mb4)
-						WHERE 1');
+		                    if($value == 'longtext')
+			                {
+							mysqli_query($mysqli,'UPDATE ' .$table. ' SET
+							    '.$row2[0].'=convert(cast(convert('.$row2[0].' using  latin1) as binary) using utf8mb4)
+							WHERE 1');
+							 }
+			                elseif(strstr($value,'varchar'))
+			                {
+							mysqli_query($mysqli,'UPDATE ' .$table. ' SET
+							    '.$row2[0].'=convert(cast(convert('.$row2[0].' using  latin1) as binary) using utf8mb4)
+							WHERE 1');
+			                }
+			                elseif($value == 'mediumtext')
+			                {
+							mysqli_query($mysqli,'UPDATE ' .$table. ' SET
+							    '.$row2[0].'=convert(cast(convert('.$row2[0].' using  latin1) as binary) using utf8mb4)
+							WHERE 1');
+			                }
 		                }
-		                elseif($value == 'mediumtext')
-		                {
-						$mysqli->query('UPDATE ' .$table. ' SET
-						    '.$row2[0].'=convert(cast(convert('.$row2[0].' using  latin1) as binary) using utf8mb4)
-						WHERE 1');
-		                }
-	                }
-	            }
+		            }
+		        }
 	        }
-        }
-echo '<br />
-'. $lang->convert_table.' <b>'.$table.'</b> '. $lang->done.' ..<br />';
-    }
+					echo '<br />'. $lang->convert_table.' <b>'.$table.'</b> '. $lang->done.' ..<br />';
+	    }
+
+	      @mysqli_free_result($result2);
+          @mysqli_free_result($result);
+  }
+
 
 	echo $lang->req_convert_reqcomplete;
 

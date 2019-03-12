@@ -3,6 +3,7 @@
 Started : 19-4-2007 11:55 AM
 End : 19-4-2007 12:03 PM
 Update : 31/09/2012 08:56:54 AM
+Update : 11/03/2019 06:05:54 AM
 */
 
 class PowerBBRecords
@@ -26,7 +27,7 @@ class PowerBBRecords
 		$statement	.=	(!empty($param['select'])) ? $param['select'] : '*';
 		$statement	.=	' FROM ' . $param['from'];
 
-		if (is_array($param['join']))
+		if (@is_array($param['join']))
 		{
 			if ($param['join']['type'] == 'inner')
 			{
@@ -48,12 +49,12 @@ class PowerBBRecords
 			$statement .= ' JOIN ' . $param['join']['from'] . ' ON ' . $param['join']['where'];
 		}
 
-		if (is_array($param['where'])
-			or (is_array($param['field'])
+		if (@is_array($param['where'])
+			or (@is_array($param['field'])
 			and $this->from == 'info'))
 		{
 			$statement .= ' WHERE ';
-			$k = is_array($param['field']) ? 'field' : 'where';
+			$k = @is_array($param['field']) ? 'field' : 'where';
 
 			$y = sizeof($param[$k]);
 
@@ -160,7 +161,7 @@ class PowerBBRecords
 			}
 		}
 
-		if (is_array($param['order']))
+		if (@is_array($param['order']))
 		{
 			if ($param['order']['type'] != 'RAND()')
 			{
@@ -174,7 +175,7 @@ class PowerBBRecords
 			$statement .= (!empty($param['order']['type'])) ? $param['order']['type'] : 'DESC';
 		}
 
-		if (is_array($param['pager']))
+		if (@is_array($param['pager']))
 		{
 			if (!isset($param['pager']['total'])
 				or !isset($param['pager']['perpage'])
@@ -299,7 +300,7 @@ class PowerBBRecords
 			}
 		}
 
-		if (is_array($complete))
+		if (@is_array($complete))
 		{
 			$statement .= ' WHERE ';
 
@@ -307,7 +308,7 @@ class PowerBBRecords
 
 			$key = array_keys($complete);
 
-			if (!is_array($complete[$key[0]]))
+			if (!@is_array($complete[$key[0]]))
 			{
 				$statement .= $complete[0] . "='" . $complete[1] . "'";
 			}
@@ -383,11 +384,11 @@ class PowerBBRecords
 
 		$this->from = 'list';
 
-		if (is_array($param['where']))
+		if (@is_array($param['where']))
 		{
 			$key = array_keys($param['where']);
 
-			if (!is_array($param['where'][$key[0]]))
+			if (!@is_array($param['where'][$key[0]]))
 			{
 				$old_where = $param['where'];
 
@@ -410,18 +411,18 @@ class PowerBBRecords
 
  	 	while ($r = $this->Engine->DB->sql_fetch_array($query))
  	 	{
- 	 	   $r['tag'] = stripslashes($r['tag']);
- 	 	   $r['title'] = stripslashes($r['title']);
- 	 	   $r['subject_describe'] = stripslashes($r['subject_describe']);
+ 	 	   $r['tag'] = @stripslashes($r['tag']);
+ 	 	   $r['title'] = @stripslashes($r['title']);
+ 	 	   $r['subject_describe'] = @stripslashes($r['subject_describe']);
  	 	   $r['tag'] = str_replace('&amp;','&',$r['tag']);
  	 	   $r['tag'] = str_replace('&#39;',"'",$r['tag']);
  	 	   $r['title'] = str_replace('&#39;',"'",$r['title']);
- 	 	   $r['title'] = htmlspecialchars($r['title']);
+ 	 	   $r['title'] = @htmlspecialchars($r['title']);
 
  	 		$rows[$x] = $r;
 
  	 		if (!empty($param['proc'])
- 	 			and is_array($param['proc']))
+ 	 			and @is_array($param['proc']))
 			{
  	 			$this->Engine->sys_functions->ListProc($rows,$x,$param);
 
@@ -430,7 +431,7 @@ class PowerBBRecords
  	 		$x += 1;
  	 	}
 
- 	 	return (is_array($rows)) ? $rows : $query;
+ 	 	return (@is_array($rows)) ? $rows : $query;
  	 	$this->Engine->DB->sql_free_result($query);
 
 	}
@@ -439,11 +440,11 @@ class PowerBBRecords
 	{
 		$this->from = 'info';
 
-		if (is_array($param['where']))
+		if (@is_array($param['where']))
 		{
 			$key = array_keys($param['where']);
 
-			if (!is_array($param['where'][$key[0]]))
+			if (!@is_array($param['where'][$key[0]]))
 			{
 				$old_where = $param['where'];
 
@@ -466,7 +467,7 @@ class PowerBBRecords
 
 		$rows = $this->Engine->DB->sql_fetch_array($query);
 
-		return (is_array($rows)) ? $rows : false;
+		return (@is_array($rows)) ? $rows : false;
  	 	$this->Engine->DB->sql_free_result($rows);
 
 	}
@@ -475,11 +476,11 @@ class PowerBBRecords
 	{
 		$this->from = 'number';
 
-		if (is_array($param['where']))
+		if (@is_array($param['where']))
 		{
 			$key = array_keys($param['where']);
 
-			if (!is_array($param['where'][$key[0]]))
+			if (!@is_array($param['where'][$key[0]]))
 			{
 				$old_where = $param['where'];
 
@@ -507,7 +508,7 @@ class PowerBBRecords
 	{
 		$statement = 'DELETE FROM ' . $param['table'];
 
-		if (is_array($param['where']))
+		if (@is_array($param['where']))
 		{
 			$statement .= ' WHERE ';
 
@@ -515,7 +516,7 @@ class PowerBBRecords
 
 			$key = array_keys($param['where']);
 
-			if (!is_array($param['where'][$key[0]]))
+			if (!@is_array($param['where'][$key[0]]))
 			{
 				$statement .= $param['where'][0] . "='" . $param['where'][1] . "'";
 			}
@@ -581,7 +582,7 @@ class PowerBBRecords
 			}
 		}
 
-		if (is_array($param['order']))
+		if (@is_array($param['order']))
 		{
 			if (empty($param['order']['field']))
 			{
@@ -625,7 +626,7 @@ class PowerBBRecords
 	 */
 	function Alter($_params){
 	  //parameters shoukd be an array
-    if( true==is_array($_params) ){
+    if( true==@is_array($_params) ){
       //build query head
       ( true==isset($_params['table']) AND false==empty($_params['table']) )
         ? $query='ALTER TABLE `'.$_params['table'].'` '
