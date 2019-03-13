@@ -125,11 +125,18 @@ class PowerBBGroup
 
 	function CreateGroupCache($param)
 	{
+       global $PowerBB;
+
   		if (!isset($param)
  			or !is_array($param))
  		{
  			$param = array();
  		}
+
+        // get permissions group hooks
+		$url = $PowerBB->functions->GetMianDir()."cache/hooks_cache/HooksCache.php";
+		@include($url);
+		$Hooks_number = @sizeof($Hooks, 1);
 
  		$cache = array();
 
@@ -239,7 +246,13 @@ class PowerBBGroup
 			$cache[$groups[$x]['id']]['review_subject'] 		    = 	$groups[$x]['review_subject'];
 			$cache[$groups[$x]['id']]['review_reply'] 		    = 	$groups[$x]['review_reply'];
 			$cache[$groups[$x]['id']]['view_action_edit'] 	    = 	$groups[$x]['view_action_edit'];
-			$cache[$groups[$x]['id']]['store_view'] 	    = 	$groups[$x]['store_view'];
+
+            // add permissions group hooks cache
+			for ($s = 0; $s < $Hooks_number; $s++)
+			{
+			$Hooks['add_permissions_group_cache'][$s] = @str_replace("\'","'", $Hooks['add_permissions_group_cache'][$s]);
+			@eval($Hooks['add_permissions_group_cache'][$s]);
+			}
 
 			$x += 1;
 		}

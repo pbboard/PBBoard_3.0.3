@@ -2842,7 +2842,7 @@ function gzip_encode($contents, $level=1)
 	{
 	   global $PowerBB;
       $file_group_cache = "cache/group_cache/group_cache".$param.".php";
-	   if(file_exists($file_group_cache) && !@in_array($PowerBB->_GET['page'], Array("store", "media", "uc", "blog", "sms")) )
+	   if(file_exists($file_group_cache))
 	    {
 			@include("cache/group_cache/group_cache".$param.".php");
 			$Group = unserialize(base64_decode($group_cache));
