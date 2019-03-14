@@ -296,7 +296,7 @@ class PowerBBCoreMOD
 
 		$ReplyArr['proc']['write_time'] 		= 	array('method'=>'date','store'=>'reply_date','type'=>$PowerBB->_CONF['info_row']['timesystem']);
 
-		$PowerBB->_CONF['template']['while']['ReplyList'] = $PowerBB->core->GetList($ReplyArr,'reply');
+		$PowerBB->_CONF['template']['while']['ReplyList'] = $PowerBB->reply->GetReplyList($ReplyArr);
 
 
 		$PowerBB->functions->CleanVariable($PowerBB->_CONF['template']['while']['ReplyList'],'html');

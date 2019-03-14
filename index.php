@@ -21,7 +21,11 @@
 	$page = str_replace( 'index', 'main', $page );
 	$page = str_replace( 'special_subject', 'special_topics', $page );
 	$module = ('modules/'.$page.'.module.php');
-
+	if(!file_exists($module))
+	{
+		@header("Location: index.php");
+		exit;
+	}
 	require_once($module);
 	//////////
 	$class_name = CLASS_NAME;

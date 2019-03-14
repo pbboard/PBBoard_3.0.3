@@ -6,10 +6,9 @@
 
 /**
  * package 	: 	PowerBBFriends (Friendss)
- * @author 		: 	MSHRAQ abu-rakan ()
+ * @author 		: 	suliman ()
  * start 		: 	7/12/2009 , 03:25 AM
  */
-
 
 class PowerBBFriends
 {
@@ -81,7 +80,6 @@ class PowerBBFriends
  			$param = array();
  		}
 
-		$param['select'] 	= 	'*';
  		$param['from'] 		= 	$this->Engine->table['friends'];
 
 		$rows = $this->Engine->records->GetList($param);

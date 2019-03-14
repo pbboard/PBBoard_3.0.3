@@ -171,13 +171,17 @@ class PowerBBProfileMOD
      	}
 
      	//////////
-
-		$time=time();
-		$date = date("h");
-		$timer = date(":i  A", $time);
+     	$user_time= $PowerBB->_CONF['template']['MemberInfo']['user_time'];
+     	$format = $PowerBB->_CONF['info_row']['datesystem'].' '.$PowerBB->_CONF['info_row']['timesystem'];
+        if($PowerBB->_CONF['template']['MemberInfo']['user_time'] == 0)
+        {		$timer = @date($format, @time());
+        }
+        else
+        {        $timer = @date($format, @strtotime($user_time));
+        }
 		$timer = str_ireplace('PM',$PowerBB->_CONF['template']['_CONF']['lang']['PM'],$timer);
 		$timer = str_ireplace('AM',$PowerBB->_CONF['template']['_CONF']['lang']['AM'],$timer);
-		$PowerBB->_CONF['template']['MemberInfo']['user_time'] = $PowerBB->functions->date($PowerBB->_CONF['template']['MemberInfo']['user_time']).$timer;
+		$PowerBB->_CONF['template']['MemberInfo']['user_time'] = $timer;
 
 		if (is_numeric($PowerBB->_CONF['template']['MemberInfo']['register_date']))
 		{
@@ -301,12 +305,21 @@ class PowerBBProfileMOD
 			$PowerBB->Powerparse->replace_smiles($PowerBB->_CONF['template']['MemberInfo']['user_sig']);
 		$PowerBB->_GET['count'] = (!isset($PowerBB->_GET['count'])) ? 0 : $PowerBB->_GET['count'];
 		$PowerBB->_GET['count'] = $PowerBB->functions->CleanVariable($PowerBB->_GET['count'],'intval');
-           		       	$perpage = '300';
-      $user_namee  = $PowerBB->_CONF['template']['MemberInfo']['username'];
-    	$GetFriendsNum = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['friends'] . " WHERE username = '$user_namee' and approval = '1'"));
+
+        $perpage = '300';
+        $user_namee  = $PowerBB->_CONF['template']['MemberInfo']['username'];
+    	$GetFriendsNum = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT distinct username_friend, userid_friend FROM " . $PowerBB->table['friends'] . " WHERE username = '$user_namee' and approval = '1'"));
 
 		// show Friends
 		$FriendsArr 					= 	array();
+		$FriendsArr['where']			= 	array();
+        $FriendsArr['select'] 	        = 	'distinct username_friend, userid_friend';
+
+		$FriendsArr['where'][0] 			= 	array();
+		$FriendsArr['where'][0]['name'] 	=  'username';
+		$FriendsArr['where'][0]['oper']		=  '=';
+		$FriendsArr['where'][0]['value']    =  $PowerBB->_CONF['template']['MemberInfo']['username'];
+
 		$FriendsArr['order']			=	array();
 		$FriendsArr['order']['field']	=	'id';
 		$FriendsArr['order']['type']	=	'DESC';
@@ -321,17 +334,11 @@ class PowerBBProfileMOD
 		$FriendsArr['pager']['location'] 	= 	'index.php?page=profile&show=1&id='.$PowerBB->_CONF['template']['MemberInfo']['id'];
 		$FriendsArr['pager']['var'] 		    = 	'count';
 
-		$FriendsArr['where'][0] 			= 	array();
-		$FriendsArr['where'][0] 			= 	array();
-		$FriendsArr['where'][0]['name'] 	=  'username';
-		$FriendsArr['where'][0]['oper']		=  '=';
-		$FriendsArr['where'][0]['value']    =  $PowerBB->_CONF['template']['MemberInfo']['username'];
+       $PowerBB->_CONF['template']['while']['FriendsList'] = $PowerBB->friends->GetFriendsList($FriendsArr);
 
-
-	   $PowerBB->_CONF['template']['while']['FriendsList'] = $PowerBB->core->GetList($FriendsArr,'friends');
 	   $nm = sizeof($PowerBB->_CONF['template']['while']['FriendsList']);
        $PowerBB->template->assign('nm_friend',$nm);
-       $IsFreind = $PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['friends'] . " WHERE username='".$PowerBB->_CONF['template']['MemberInfo']['username']."' AND username_friend='".$PowerBB->_CONF['member_row']['username']."' or username_friend='".$PowerBB->_CONF['template']['MemberInfo']['username']."' AND username='".$PowerBB->_CONF['member_row']['username']."'" );
+       $IsFreind = $PowerBB->DB->sql_query("SELECT distinct username_friend, userid_friend FROM " . $PowerBB->table['friends'] . " WHERE username='".$PowerBB->_CONF['template']['MemberInfo']['username']."' AND username_friend='".$PowerBB->_CONF['member_row']['username']."' or username_friend='".$PowerBB->_CONF['template']['MemberInfo']['username']."' AND username='".$PowerBB->_CONF['member_row']['username']."'" );
        $IsFreind_row = $PowerBB->DB->sql_fetch_array($IsFreind);
 		if($PowerBB->DB->sql_num_rows($IsFreind) > 0)
 		{

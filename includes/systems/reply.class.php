@@ -18,7 +18,6 @@ class PowerBBReply
  			$param = array();
  		}
 
- 		$param['select'] 	= 	'*';
  		$param['from'] 		= 	$this->Engine->table['reply'];
 
  	 	$rows = $this->Engine->records->GetList($param);

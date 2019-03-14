@@ -257,8 +257,8 @@ class PowerBBRecords
 		}
 		@mysqli_set_charset($connect, $encoding);
 		@mysqli_query($connect, "SET @@session.sql_mode=''");
-		$query = mysqli_query($connect,$query_string);
-		$insert_id = (mysqli_insert_id($connect));
+		$query = @mysqli_query($connect,$query_string);
+		$insert_id = (@mysqli_insert_id($connect));
 		@session_start();
 		$_SESSION['last_insert_id'] = $insert_id;
 		}

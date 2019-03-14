@@ -106,7 +106,6 @@ class PowerBBCore
  			$param = array();
  		}
 
-		$param['select'] 	= 	'*';
  		$param['from'] 		= 	$PowerBB->prefix.$table;
 
  	 	$rows = $this->Engine->records->GetList($param);

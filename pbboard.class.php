@@ -629,67 +629,106 @@ class PowerBB
 
 				while ($x <= $y)
 				{
-
 		            $rows[$x]['text'] = str_replace("&#39;", "'", $rows[$x]['text']);
 		            if ($rows[$x]['varname'] == 'post_text_max')
 		            {
 		             $rows[$x]['text'] = str_replace("30000", $this->_CONF['info_row']['post_text_max'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'floodctrl')
+		            elseif ($rows[$x]['varname'] == 'floodctrl')
 		            {
 		              $rows[$x]['text'] = str_replace("30", $this->_CONF['info_row']['floodctrl'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'Reply_Editing_time_out')
+		            elseif ($rows[$x]['varname'] == 'Reply_Editing_time_out')
 		            {
 		              $rows[$x]['text'] = str_replace("1440", $this->_CONF['info_row']['time_out'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'Editing_time_out')
+		            elseif ($rows[$x]['varname'] == 'Editing_time_out')
 		            {
 		              $rows[$x]['text'] = str_replace("1440", $this->_CONF['info_row']['time_out'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'characters_keyword_search')
+		            elseif ($rows[$x]['varname'] == 'characters_keyword_search')
 		            {
 		              $rows[$x]['text'] = str_replace("3", $this->_CONF['info_row']['characters_keyword_search'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'flood_search1')
+		            elseif ($rows[$x]['varname'] == 'flood_search1')
 		            {
 		              $rows[$x]['text'] = str_replace("40", $this->_CONF['info_row']['flood_search'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'max_avatar')
+		            elseif ($rows[$x]['varname'] == 'max_avatar')
 		            {
 		              $rows[$x]['text'] = str_ireplace("150 في", $this->_CONF['info_row']['max_avatar_width']." في", $rows[$x]['text']);
 		              $rows[$x]['text'] = str_ireplace("150 بيكسل", $this->_CONF['info_row']['max_avatar_height']." بيكسل", $rows[$x]['text']);
 		              $rows[$x]['text'] = str_ireplace("150 in", $this->_CONF['info_row']['max_avatar_width']." in", $rows[$x]['text']);
 		              $rows[$x]['text'] = str_ireplace("150 Pixel", $this->_CONF['info_row']['max_avatar_height']." Pixel", $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'post_text_max_subjects')
+		            elseif ($rows[$x]['varname'] == 'post_text_max_subjects')
 		            {
 		              $rows[$x]['text'] = str_replace("60", $this->_CONF['info_row']['post_title_max'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'post_text_min_subjects')
+		            elseif ($rows[$x]['varname'] == 'post_text_min_subjects')
 		            {
 		              $rows[$x]['text'] = str_replace("(4)", $this->_CONF['info_row']['post_title_min'], $rows[$x]['text']);
 		              $rows[$x]['text'] = str_replace("60", $this->_CONF['info_row']['post_title_min'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'post_text_min')
+		            elseif ($rows[$x]['varname'] == 'post_text_min')
 		            {
 		              $rows[$x]['text'] = str_replace("5", $this->_CONF['info_row']['post_text_min'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'Character_name_a_few_user')
+		            elseif ($rows[$x]['varname'] == 'Character_name_a_few_user')
 		            {
 		              $rows[$x]['text'] = str_replace("3", $this->_CONF['info_row']['reg_less_num'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'characters_Username_many')
+		            elseif ($rows[$x]['varname'] == 'characters_Username_many')
 		            {
 		              $rows[$x]['text'] = str_replace("25", $this->_CONF['info_row']['reg_max_num'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'Character_pass_few')
+		            elseif ($rows[$x]['varname'] == 'Character_pass_few')
 		            {
 		              $rows[$x]['text'] = str_replace("5", $this->_CONF['info_row']['reg_pass_min_num'], $rows[$x]['text']);
 		            }
-		            if ($rows[$x]['varname'] == 'Character_pass_many')
+		            elseif ($rows[$x]['varname'] == 'Character_pass_many')
 		            {
 		              $rows[$x]['text'] = str_replace("25", $this->_CONF['info_row']['reg_pass_max_num'], $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'send_a_private_message_to')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'search_for_all_posts')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'search_for_all_replys')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'send_a_message_to_the_mailing')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'edit_member_data')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'user_send_warning')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'search_for_all_posts')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'user_search_subjects')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'search_for_all_replys')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
+		            }
+		            elseif ($rows[$x]['varname'] == 'user_search_replys')
+		            {
+		              $rows[$x]['text'] = str_replace($rows[$x]['text'], $rows[$x]['text'].": ", $rows[$x]['text']);
 		            }
 		            $rows[$x]['text'] = str_replace("{info_row_title}", $this->_CONF['info_row']['title'], $rows[$x]['text']);
 					$this->_CONF['lang'][$rows[$x]['varname']] = $rows[$x]['text'];

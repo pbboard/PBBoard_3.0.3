@@ -177,10 +177,8 @@ class PowerBBLocalCommon
 {
 	function run()
 	{
-			global $PowerBB;
-
-		header('Content-Type: text/html; charset=utf-8'); // Viva utf ;)
-
+		global $PowerBB;
+		//header('Content-Type: text/html; charset=utf-8'); // Viva utf ;)
 		$this->_SetConfigArray();
 	}
 

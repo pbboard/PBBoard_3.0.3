@@ -297,37 +297,49 @@ class PBBTemplate
 			$first_replace = "mqtids_replace_cod";
 			$string = str_replace($first_search,$first_replace,$string);
 			}
-			if ($filename == 'headinclud')
+			elseif ($filename == 'reply_edit')
+			{
+			$first_search = 'id="non_actiondate" type="checkbox" checked="checked"';
+			$first_replace = 'id="non_actiondate" type="checkbox"';
+			$string = str_replace($first_search,$first_replace,$string);
+			}
+			elseif ($filename == 'subject_edit')
+			{
+			$first_search = 'id="non_actiondate" type="checkbox" checked="checked"';
+			$first_replace = 'id="non_actiondate" type="checkbox"';
+			$string = str_replace($first_search,$first_replace,$string);
+			}
+			elseif ($filename == 'headinclud')
 			{
 			$first_search = 'meta name="description" content=" ';
 			$first_replace = 'meta name="description" content="';
 			$string = str_replace($first_search,$first_replace,$string);
 			}
-			if ($filename == 'pm_show')
+			elseif ($filename == 'pm_show')
 			{
 			$first_search = "ATTACH_SHOW";
 			$first_replace = "ATTACH_SHOW_PM";
 			$string = str_replace($first_search,$first_replace,$string);
 			}
-			if ($filename == 'new_topic')
+			elseif ($filename == 'new_topic')
 			{
 			$first_search = "[n]";
 			$first_replace = "[\n]";
 			$string = str_replace($first_search,$first_replace,$string);
 			}
-			if ($filename == 'add_chat_message')
+			elseif ($filename == 'add_chat_message')
 			{
 			$first_search = 'name="text"';
 			$first_replace = 'name="textc"';
 			$string = str_replace($first_search,$first_replace,$string);
 			}
-			if ($filename == 'sections_list')
+			elseif ($filename == 'sections_list')
 			{
 			$first_search = "count=";
 			$first_replace = "last_post=1&amp;count=";
 			$string = str_replace($first_search,$first_replace,$string);
 			}
-			if ($filename == 'usercp_menu')
+			elseif ($filename == 'usercp_menu')
 			{
 			$search_coordination_array 	= 	array();
 			$replace_coordination_array 	= 	array();
