@@ -11,7 +11,10 @@ class PowerBBCodeParse
             //$string = $PowerBB->functions->pbb_stripslashes($string);
              //$string = strip_tags($string);
 
-            // start regex
+	         // Parse quotes first
+	         $string = $this->PowerCode_Quote($string);
+
+                 // start php code
                 $regexcode = array();
 			    $regexcode['[code]'] = '#\[code\](.*)\[/code\]#siU';
 			    $regexcode['[php]'] = '#\[php\](.*)\[/php\]#siU';
@@ -36,18 +39,7 @@ class PowerBBCodeParse
 				    return $this->PowerCode_Youtube($youtuber[1],$youtuber[2]);
 				}, $string);
 
-			    $regexquoteuser['[quote=]'] = '#\[quote=(.*)\](.*)\[/quote\]#siU';
-				$string = preg_replace_callback($regexquoteuser, function($quoteuser) {
-				    return $this->PowerCode_Quote($quoteuser[2],$quoteuser[1]);
-				}, $string);
 
- 			    $regexquote = array();
-			    $regexquote['[qu]'] = '#\[qu\](.*)\[/qu\]#siU';
-			    $regexquote['[quote]'] = '#\[quote\](.*)\[/quote\]#siU';
-			    $regexquote['[QUOTE]'] = '#\[QUOTE\](.*)\[/QUOTE\]#siU';
-				$string = preg_replace_callback($regexquote, function($quote) {
-				    return $this->PowerCode_Quote($quote[1]);
-				}, $string);
 
             $string = preg_replace('#\[b\](.+)\[\/b\]#iUs', '<b>$1</b>', $string);
             $string = preg_replace('#\[u\](.+)\[\/u\]#iUs', '<u>$1</u>', $string);
@@ -116,6 +108,9 @@ class PowerBBCodeParse
 
 
          }
+
+
+
           if(strstr($string,"<br")
           or strstr($string,"<table"))
           {
@@ -197,27 +192,97 @@ class PowerBBCodeParse
                 $bbcode_replace = str_replace("{option}","", $bbcode_replace);
                 return $bbcode_replace;
         }
- 	  function PowerCode_Quote($message, $username = '')
-        {
+
+ 	  function PowerCode_Quote($message)
+      {
         	global $PowerBB;
-                if (trim($message) == '')
-                {
-                        return '';
-                }
-                $message = str_replace('\\"', '"', $message);
-               $message= $this->closetags($message);
-                $message = str_replace('<div', '<span', $message);
-                $message = str_replace('div>', 'span>', $message);
-                if($username)
-                {
-                   $Quote = '<blockquote class="quotetop">' .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] .' '. $username . '  » </blockquote><blockquote class="quotemain">' . $message . '</blockquote>';
-                }
-                else
-                {
-                   $Quote ='<blockquote class="quotetop">'.$PowerBB->_CONF['template']['_CONF']['lang']['quote'].'</blockquote><blockquote class="quotemain">' . $message . '</blockquote>';
-                }
-             return $Quote;
-        }
+ 		// Assign pattern and replace values.
+		$pattern = "#\[quote\](.*?)\[\/quote\](\r\n?|\n?)#si";
+		$pattern_callback = "#\[quote=([\"']|&quot;|)(.*?)(?:\\1)(.*?)(?:[\"']|&quot;)?\](.*?)\[/quote\](\r\n?|\n?)#si";
+
+		if($text_only == false)
+		{
+			$replace = "<blockquote class=\"quotetop\"><cite>".$PowerBB->_CONF['template']['_CONF']['lang']['quote']."</cite>$1</blockquote>\n";
+			$replace_callback = array($this, 'mycode_parse_post_quotes_callback1');
+		}
+		else
+		{
+			$replace = "\n".$PowerBB->_CONF['template']['_CONF']['lang']['quote']."\n--\n$1\n--\n";
+			$replace_callback = array($this, 'mycode_parse_post_quotes_callback2');
+		}
+		do
+		{
+			// preg_replace has erased the message? Restore it...
+			$previous_message = $message;
+			$message = preg_replace($pattern, $replace, $message, -1, $count);
+			$message = preg_replace_callback($pattern_callback, $replace_callback, $message, -1, $count_callback);
+			if(!$message)
+			{
+				$message = $previous_message;
+				break;
+			}
+		} while($count || $count_callback);
+
+		if($text_only == false)
+		{
+			$find = array(
+				"#(\r\n*|\n*)<\/cite>(\r\n*|\n*)#",
+				"#(\r\n*|\n*)<\/blockquote>#"
+			);
+
+			$replace = array(
+				"</cite><br />",
+				"</blockquote>"
+			);
+			$message = preg_replace($find, $replace, $message);
+		}
+		return $message;
+	  }
+
+
+	/**
+	* Parses quotes with post id and/or dateline.
+	*
+	* @param array $matches Matches.
+	* @return string The parsed message.
+	*/
+	function mycode_parse_post_quotes_callback1($matches)
+	{
+		return $this->mycode_parse_post_quotes($matches[4],$matches[2].$matches[3]);
+	}
+
+	/**
+	* Parses quotes with post id and/or dateline.
+	*
+	* @param array $matches Matches.
+	* @return string The parsed message.
+	*/
+	function mycode_parse_post_quotes_callback2($matches)
+	{
+		return $this->mycode_parse_post_quotes($matches[4],$matches[2].$matches[3], true);
+	}
+
+	function mycode_parse_post_quotes($message, $username)
+	{
+		global $PowerBB;
+
+		$message = trim($message);
+		$message = preg_replace("#(^<br(\s?)(\/?)>|<br(\s?)(\/?)>$)#i", "", $message);
+
+		if(!$message)
+		{
+			return '';
+		}
+
+		if($username)
+		{
+			return "\n <blockquote class=\"quotetop\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] ."{$span}{$username}</blockquote><blockquote class=\"quotemain\">{$message}</blockquote>\n \n";
+		}
+		else
+		{
+			return "\n <blockquote class=\"quotetop\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote'] ."</blockquote><blockquote class=\"quotemain\">{$message}</blockquote>\n \n";
+		}
+	}
 
 	  function text_with_hyperlink($string)
         {

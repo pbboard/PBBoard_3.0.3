@@ -485,11 +485,13 @@ class PowerBBTopicAddMOD
                 $last_write_time = $PowerBB->DB->sql_fetch_array($last_subject_write_time);
 	            if ((time() - $PowerBB->_CONF['info_row']['floodctrl']) <= $last_write_time['native_write_time'])
 	            {
-	            $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl_subjects'] = str_replace("30",$PowerBB->_CONF['info_row']['floodctrl'],$PowerBB->_CONF['template']['_CONF']['lang']['floodctrl_subjects']);
-                $PowerBB->functions->ShowHeader($PowerBB->_CONF['template']['_CONF']['lang']['add_new_topic']);
-				$PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['floodctrl_subjects'],$stop,$stop);
-                 $this->_empty_bac();
-				$PowerBB->functions->error_stop();
+					$PowerBB->functions->ShowHeader();
+					$floodctrl = @time() - $PowerBB->_CONF['member_row']['lastpost_time'] - $PowerBB->_CONF['info_row']['floodctrl'] ;
+					$PowerBB->_CONF['template']['_CONF']['lang']['floodctrl_subjects'] = str_replace('30', " <b>".$floodctrl."</b> ", $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl_subjects']);
+					$PowerBB->_CONF['template']['_CONF']['lang']['floodctrl_subjects'] = str_replace("-", "", $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl_subjects']);
+					$PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['floodctrl_subjects'],$stop,$stop);
+					$this->_empty_bac();
+					$PowerBB->functions->error_stop();
 				}
 
 				if ($last_write_time['title'] == $PowerBB->_POST['title'])

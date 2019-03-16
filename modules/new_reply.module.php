@@ -72,7 +72,7 @@ class PowerBBReplyAddMOD
 
 		if (!$this->SubjectInfo)
 		{
-			$PowerBB->functions->ShowHeader($PowerBB->_CONF['template']['_CONF']['lang']['path_not_true']);
+			$PowerBB->functions->ShowHeader($PowerBB->_CONF['template']['_CONF']['lang']['Requested_topic_does_not_exist']);
 			$PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['Requested_topic_does_not_exist']);
 		}
 
@@ -106,6 +106,7 @@ class PowerBBReplyAddMOD
 		{
 			if ($this->SubjectInfo['close'])
 			{
+			    $PowerBB->functions->ShowHeader($PowerBB->_CONF['template']['_CONF']['lang']['This_topic_is_locked']);
 				$PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['This_topic_is_locked']);
 			}
 		}
@@ -173,6 +174,7 @@ class PowerBBReplyAddMOD
 			}
 	        else
 	        {
+
 			$PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['Sorry_you_can_not_write_in_this_section']);
 	        }
 		}
@@ -509,7 +511,9 @@ class PowerBBReplyAddMOD
 						if (!$PowerBB->functions->ModeratorCheck($this->SectionInfo['id']))
 						{
 						   $PowerBB->functions->ShowHeader();
-  			               $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl'] = str_replace('30', $PowerBB->_CONF['info_row']['floodctrl'], $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
+  			               $floodctrl = @time() - $PowerBB->_CONF['member_row']['lastpost_time'] - $PowerBB->_CONF['info_row']['floodctrl'] ;
+  			               $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl'] = str_replace($PowerBB->_CONF['info_row']['floodctrl'], " <b>".$floodctrl."</b> ", $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
+  			               $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl'] = str_replace("-", "", $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
 						   $PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
 						}
 		            }
@@ -592,8 +596,11 @@ class PowerBBReplyAddMOD
 		            {
 						if (!$PowerBB->functions->ModeratorCheck($this->SectionInfo['id']))
 						{
-  			              $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl'] = str_replace('30', $PowerBB->_CONF['info_row']['floodctrl'], $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
-						  $PowerBB->functions->error_no_foot($PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
+  			               $floodctrl = @time() - $PowerBB->_CONF['member_row']['lastpost_time'] - $PowerBB->_CONF['info_row']['floodctrl'] ;
+  			               $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl'] = str_replace($PowerBB->_CONF['info_row']['floodctrl'], " <b>".$floodctrl."</b> ", $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
+  			               $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl'] = str_replace("-", "", $PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
+						   $PowerBB->functions->error_no_foot($PowerBB->_CONF['template']['_CONF']['lang']['floodctrl']);
+
 						}
 		            }
 
