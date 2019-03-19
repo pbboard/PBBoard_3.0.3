@@ -601,7 +601,7 @@ class PowerBBSearchEngineMOD
 	           }
 		      elseif ($starteronly == '1')
 		       {
-	             $username_reply_nm = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT DISTINCT subject_id,writer,title FROM " . $PowerBB->table['reply'] . " WHERE writer LIKE '$username' AND section not in (" .$forum_not. ") AND delete_topic<>1 AND review_reply<>1 ".$section." "));
+	             $username_reply_nm = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['reply'] . " WHERE writer LIKE '$username' AND section not in (" .$forum_not. ") AND delete_topic<>1 AND review_reply<>1 ".$section." "));
 		         $PowerBB->functions->msg($PowerBB->_CONF['template']['_CONF']['lang']['Search_successful']);
 	          if ($username_reply_nm > '0')
 	          {
@@ -1387,12 +1387,11 @@ class PowerBBSearchEngineMOD
 
                   $forum_not = $PowerBB->_CONF['info_row']['last_subject_writer_not_in'];
 
-	           $username_reply_nm = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT DISTINCT subject_id,writer,title FROM " . $PowerBB->table['reply'] . " WHERE writer LIKE '$username' AND section not in (" .$forum_not. ") AND delete_topic<>1 AND review_reply<>1 ".$section." "));
+	           $username_reply_nm = $PowerBB->DB->sql_num_rows($PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['reply'] . " WHERE writer LIKE '$username' AND section not in (" .$forum_not. ") AND delete_topic<>1 AND review_reply<>1 ".$section." "));
 
 				$PowerBB->template->assign('username_nm',$username_reply_nm);
 		     	$MemReplyArr 								= 	array();
 				$MemReplyArr['where'] 						= 	array();
-		        $MemReplyArr['select'] 	                = 	'DISTINCT subject_id,title,writer,icon';
 
 				$MemReplyArr['where'][0] 			= 	array();
 				$MemReplyArr['where'][0]['name'] 	=  'writer';
