@@ -1414,7 +1414,16 @@ function CleanText($string)
  	 */
  	function IsSite($adress)
  	{
- 		return preg_match('~http:\/\/(.*?)~',$adress) ? true : false;
+ 		if(preg_match('~http:\/\/(.*?)~',$adress)
+ 		or preg_match('~https:\/\/(.*?)~',$adress))
+ 		{
+ 		return true;
+ 		}
+ 		else
+ 		{
+ 		return false;
+ 		}
+
  	}
  	function IsImage($filename,$upload)
  	{
