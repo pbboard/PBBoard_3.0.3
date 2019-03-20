@@ -574,16 +574,7 @@ class PowerBBCodeParse
 			$replace = $this->PowerCode_Youtube("$2", "$2");
 			$text =preg_replace($search, $replace, $text);
              */
-             $regexcode = array();
-			$regexcode['[code]'] = '#\[code\](.*)\[/code\]#siU';
-			$regexcode['[php]'] = '#\[php\](.*)\[/php\]#siU';
-			$text = preg_replace_callback($regexcode, function($matches) {
-			$matches[1] = base64_decode($matches[1]);
-			$matches[1] = str_replace("&amp;#39;", "'", $matches[1]);
-			return '<div class="codemain"><pre style="float: left;" class="brush:php">'.$matches[1].'</pre></div>';
-			}, $text);
 
-            eval($PowerBB->functions->get_fetch_hooks('BBCodeParseHooks_cr'));
           // long URL, Shortening Long URLs With PHP
  	    //$text = preg_replace('#\<a(.*)\">(.*)\</a\>#siU',"\$this->shortenurl('\\1','\\2','44')",$text);
        		$text = str_replace("<br>","<br />",$text);
@@ -638,6 +629,19 @@ class PowerBBCodeParse
             }
 			$text = str_ireplace("{h-h}", "http", $text);
 			$text = str_ireplace("{w-w}", "www.", $text);
+
+             // end decode php code
+             $regexcode = array();
+			$regexcode['[code]'] = '#\[code\](.*)\[/code\]#siU';
+			$regexcode['[php]'] = '#\[php\](.*)\[/php\]#siU';
+			$text = preg_replace_callback($regexcode, function($matches) {
+			$matches[1] = base64_decode($matches[1]);
+			$matches[1] = str_replace("&amp;#39;", "'", $matches[1]);
+			return '<div class="codemain"><pre style="float: left;" class="brush:php">'.$matches[1].'</pre></div>';
+			}, $text);
+
+            eval($PowerBB->functions->get_fetch_hooks('BBCodeParseHooks_cr'));
+
         return $text;
 	}
    // long URL, Shortening Long URLs With PHP
