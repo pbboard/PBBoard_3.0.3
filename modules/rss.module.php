@@ -87,13 +87,13 @@ class PowerBBRSSMOD
 	$size 	= 	sizeof($SubjectList);
 	$x	=	0;
 	while ($x < $size)
-	 {        $SubjectList[$x]['text'] = @preg_replace('#<img .*src="(.*)".*>#iU', "'{img_s}$1{img_e}'", $SubjectList[$x]['text']);
+	 {        $SubjectList[$x]['text'] = @preg_replace('#<img .*src="(.*)".*>#iU', "{img_s}$1{img_e}", $SubjectList[$x]['text']);
 	    //$_searchBB = '#\[(.*)\]#esiU';
 	   // $_replaceBB = "";
        	$SubjectList[$x]['text'] = str_replace($PowerBB->_CONF['template']['_CONF']['lang']['resize_image_w_h'], "", $SubjectList[$x]['text']);
 
-		$description = $PowerBB->Powerparse->_wordwrap($PowerBB->functions->CleanText($SubjectList[$x]['text']),250);
-		$SubjectList[$x]['text'] = $PowerBB->Powerparse->_wordwrap($PowerBB->functions->CleanText($SubjectList[$x]['text']),300);
+		$description = $PowerBB->Powerparse->ShortPhrase($PowerBB->functions->CleanText($SubjectList[$x]['text']),300);
+		$SubjectList[$x]['text'] = $PowerBB->Powerparse->ShortPhrase($PowerBB->functions->CleanText($SubjectList[$x]['text']),400);
 
 		//$SubjectList[$x]['text'] = @preg_replace($_searchBB,$_replaceBB,$SubjectList[$x]['text']);
 		//$SubjectList[$x]['title'] = @preg_replace($_searchBB,$_replaceBB,$SubjectList[$x]['title']);
@@ -117,6 +117,8 @@ class PowerBBRSSMOD
        $description = str_replace("{img_s}",'[img]', $description);
        $description = str_replace("{img_e}",'[/img]', $description);
 		$description = $this->convert_int_to_utf8($description);
+		$description = str_replace("[img]look/","[img]".$PowerBB->functions->GetForumAdress()."look/", $description);
+
 		$SubjectList[$x]['title'] = $this->convert_int_to_utf8($SubjectList[$x]['title']);
 
 		$extention = "";
@@ -189,10 +191,10 @@ class PowerBBRSSMOD
 	$x	=	0;
 	while ($x < $size)
 	{
-       $SubjectList[$x]['text'] = @preg_replace('#<img .*src="(.*)".*>#iU', "'{img_s}$1{img_e}'", $SubjectList[$x]['text']);
+       $SubjectList[$x]['text'] = @preg_replace('#<img .*src="(.*)".*>#iU', "{img_s}$1{img_e}", $SubjectList[$x]['text']);
        	$SubjectList[$x]['text'] = str_replace($PowerBB->_CONF['template']['_CONF']['lang']['resize_image_w_h'], "", $SubjectList[$x]['text']);
-     	$description = $PowerBB->Powerparse->_wordwrap($PowerBB->functions->CleanText($SubjectList[$x]['text']),250);
-        $SubjectList[$x]['text'] = $PowerBB->Powerparse->_wordwrap($PowerBB->functions->CleanText($SubjectList[$x]['text']),300);
+     	$description = $PowerBB->Powerparse->ShortPhrase($PowerBB->functions->CleanText($SubjectList[$x]['text']),300);
+        $SubjectList[$x]['text'] = $PowerBB->Powerparse->ShortPhrase($PowerBB->functions->CleanText($SubjectList[$x]['text']),400);
 
 	    //$_searchBB = '#\[(.*)\]#esiU';
 	   // $_replaceBB = "";
@@ -222,6 +224,7 @@ class PowerBBRSSMOD
 		$extention = "";
 		$url = "index.php?page=topic&amp;show=1&amp;id=";
 		$url = $PowerBB->functions->rewriterule($url);
+		$description = str_replace("[img]look/","[img]".$PowerBB->functions->GetForumAdress()."look/", $description);
 		echo "<item>";
 		echo "<title>" . $PowerBB->functions->CleanText($SubjectList[$x]['title'])  . "</title>\n";
 		echo "<description>" . trim($description) . "</description>\n";

@@ -867,6 +867,30 @@ class PowerBBCodeParse
        }
        return $text.$sfdr;
 	}
+
+	function ShortPhrase($String, $Letters)
+	{
+	    $strlen = strlen(utf8_decode($String));
+	    if ($strlen > $Letters) {
+	        $sub = substr($String,$Letters,1);
+	        if ($sub != " ") {
+	            while($sub !=" "){
+	                $Letters++;
+	                $sub = substr($String,$Letters,1);
+	            }
+	        }
+	        $newtext1 = substr($String,0,$Letters);
+	    }else {
+	        $newtext2 = $String;
+	    }
+	    if ($newtext1 != "") {
+	        $newtext = $newtext1." ...";
+	    }else {
+	        $newtext = $newtext2;
+	    }
+	    return $newtext;
+	}
+
        function PowerCode_Tag_Url($link, $message)
         {
         	global $PowerBB;
