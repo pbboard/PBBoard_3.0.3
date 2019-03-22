@@ -1166,11 +1166,11 @@ class PowerBBCodeParse
 		// Replace email address
 		$string = preg_replace('#<a .*?href=.*?"mailto:(.*?)".*?>(.*?)</a>#i', "$2 ([email]$1[/email])", $string);
 		// Replace links
-		$string = preg_replace('#<a .*href=.*"(.*)".*>(.*)</a>#iU', "'[url'. (trim('$1') ? '='.trim('$1') : '') .']'.trim('$2').'[/url]'", $string);
+		$string = preg_replace('#<a .*href=.*"(.*)".*>(.*)</a>#iU', "'[url'. $1 ? '='$1 : '' .']$2[/url]'", $string);
 		// Remove any image tags whose source starts with 'cid:' - this is an inline attachment, and will be added to the post as a normal attachment.
 		$string = preg_replace('#<img[^>]+src="cid:[^>]+>#i', '', $string);
 		// Replace image references
-		$string = preg_replace('#<img .*src="(.*)".*>#iU', "'[img]'.trim('$1').'[/img]'", $string);
+		$string = preg_replace('#<img .*src="(.*)".*>#iU', "'[img]$1[/img]'", $string);
 		// Remove all remaining HTML tags
 		$string = preg_replace('#<(/?\w+|!--)[^>]*>#', '', $string);
 		// Convert HTML entities

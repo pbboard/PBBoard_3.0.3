@@ -87,7 +87,7 @@ class PowerBBRSSMOD
 	$size 	= 	sizeof($SubjectList);
 	$x	=	0;
 	while ($x < $size)
-	 {        $SubjectList[$x]['text'] = @preg_replace('#<img .*src="(.*)".*>#iU', "'{img_s}'.trim('$1').'{img_e}'", $SubjectList[$x]['text']);
+	 {        $SubjectList[$x]['text'] = @preg_replace('#<img .*src="(.*)".*>#iU', "'{img_s}$1{img_e}'", $SubjectList[$x]['text']);
 	    //$_searchBB = '#\[(.*)\]#esiU';
 	   // $_replaceBB = "";
        	$SubjectList[$x]['text'] = str_replace($PowerBB->_CONF['template']['_CONF']['lang']['resize_image_w_h'], "", $SubjectList[$x]['text']);
@@ -189,7 +189,7 @@ class PowerBBRSSMOD
 	$x	=	0;
 	while ($x < $size)
 	{
-       $SubjectList[$x]['text'] = @preg_replace('#<img .*src="(.*)".*>#iU', "'{img_s}'.trim('$1').'{img_e}'", $SubjectList[$x]['text']);
+       $SubjectList[$x]['text'] = @preg_replace('#<img .*src="(.*)".*>#iU', "'{img_s}$1{img_e}'", $SubjectList[$x]['text']);
        	$SubjectList[$x]['text'] = str_replace($PowerBB->_CONF['template']['_CONF']['lang']['resize_image_w_h'], "", $SubjectList[$x]['text']);
      	$description = $PowerBB->Powerparse->_wordwrap($PowerBB->functions->CleanText($SubjectList[$x]['text']),250);
         $SubjectList[$x]['text'] = $PowerBB->Powerparse->_wordwrap($PowerBB->functions->CleanText($SubjectList[$x]['text']),300);
