@@ -334,7 +334,13 @@ class PowerBBCommon
 		}
         else
 		{
+		 if(strstr($PowerBB->_CONF['rows']['member_row']['avater_path'],'http'))
+		 {		 $avater_path_admin = $PowerBB->_CONF['rows']['member_row']['avater_path'];
+		 }
+		 else
+		 {
 		 $avater_path_admin = "../".$PowerBB->_CONF['rows']['member_row']['avater_path'];
+		 }
 		}
 		$PowerBB->template->assign('avater_path_admin',$avater_path_admin);
 

@@ -196,13 +196,21 @@ class PowerBBCodeParse
  	  function PowerCode_Quote($message)
       {
         	global $PowerBB;
+		$message = trim($message);
+       $message = str_replace("[/quote]<br />", "[/quote]", $message);
+       $message = str_replace("[/quote]", "[/quote]<br />", $message);
+
+		if(!$message)
+		{
+			return '';
+		}
  		// Assign pattern and replace values.
 		$pattern = "#\[quote\](.*?)\[\/quote\](\r\n?|\n?)#si";
 		$pattern_callback = "#\[quote=([\"']|&quot;|)(.*?)(?:\\1)(.*?)(?:[\"']|&quot;)?\](.*?)\[/quote\](\r\n?|\n?)#si";
 
 		if($text_only == false)
 		{
-			$replace = "<blockquote class=\"quotetop\"><cite>".$PowerBB->_CONF['template']['_CONF']['lang']['quote']."</cite>$1</blockquote>\n";
+			$replace = "<blockquote class=\"quotetop\" style=\"margin:0px\"><cite>".$PowerBB->_CONF['template']['_CONF']['lang']['quote']."</cite></blockquote><blockquote class=\"quotemain\" style=\"margin:0px; margin-top:-11px\">$1</blockquote>\n";
 			$replace_callback = array($this, 'mycode_parse_post_quotes_callback1');
 		}
 		else
@@ -274,13 +282,14 @@ class PowerBBCodeParse
 			return '';
 		}
 
-		if($username)
+		if(empty($username))
 		{
-			return "\n <blockquote class=\"quotetop\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] ."{$span}{$username}</blockquote><blockquote class=\"quotemain\">{$message}</blockquote>\n \n";
+			return "\n <blockquote class=\"quotetop\" style=\"margin:0px\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] ."{$span}{$username}</blockquote><blockquote class=\"quotemain\" style=\"margin:0px; margin-top:-11px\">{$message}</blockquote>\n \n";
+
 		}
 		else
 		{
-			return "\n <blockquote class=\"quotetop\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote'] ."</blockquote><blockquote class=\"quotemain\">{$message}</blockquote>\n \n";
+			return "\n <blockquote class=\"quotetop\" style=\"margin:0px\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] ."{$span}{$username}</blockquote><blockquote class=\"quotemain\" style=\"margin:0px; margin-top:-11px\">{$message}</blockquote>\n \n";
 		}
 	}
 
@@ -428,7 +437,7 @@ class PowerBBCodeParse
                 $txt = str_replace('\\"', '"', $txt);
            return '' . $txt . '';
         }
-        function DoList($mark,$item)
+        function DoList($mark,$item = '')
          {
                   if ($mark=="1")
                   {
