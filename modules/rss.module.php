@@ -249,6 +249,11 @@ class PowerBBRSSMOD
 		$content=preg_replace("/(\r?\n){2,}/",'', $content); //Replace all newline characters with ''
 		$content=preg_replace( "/\s+/", " ", $content );//Replace multiple spaces with single space
 		$content=trim($content);
+		$content=str_replace("&","&amp;",$content);
+		$content=str_replace("<","&lt;",$content);
+		$content=str_replace(">","&gt;",$content);
+		$content=str_replace("'","&apos;",$content);
+		$content=str_replace('"',"&quot;",$content);
 		return $content;
 	}
 

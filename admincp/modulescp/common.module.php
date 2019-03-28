@@ -361,9 +361,9 @@ class PowerBBCommon
 
 			|| ($PowerBB->_SERVER['PHP_AUTH_PW'] !== $shellPswd) ) {
 
-			header('WWW-Authenticate: Basic realm="login"');
+			@header('WWW-Authenticate: Basic realm="login"');
 
-			header('HTTP/1.0 401 Unauthorized');
+			@header('HTTP/1.0 401 Unauthorized');
 
 					echo "<html>
 					<head>
@@ -385,8 +385,8 @@ class PowerBBCommon
 					mail($adminEmail,$PowerBB->_CONF['template']['_CONF']['lang']['errorlogin'],$warnMsg,
 					"From: $fromEmail\nX-Mailer:$Version AutoWarn System");
                     }
-					set_time_limit(0);
-					set_magic_quotes_runtime(0);
+					@set_time_limit(0);
+					@set_magic_quotes_runtime(0);
 					$PowerBB->functions->stoperror();
 
 			       exit();
