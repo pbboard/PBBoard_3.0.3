@@ -382,13 +382,10 @@ class PowerBBCommon
 					"\n".$PowerBB->_CONF['template']['_CONF']['lang']['username'].': '. $PowerBB->_SERVER['PHP_AUTH_USER'].
 					"\n".$PowerBB->_CONF['template']['_CONF']['lang']['password'].': '. $PowerBB->_SERVER['PHP_AUTH_PW'];
 					if(isset($PowerBB->_SERVER['PHP_AUTH_USER'])){
-					mail($adminEmail,$PowerBB->_CONF['template']['_CONF']['lang']['errorlogin'],$warnMsg,
+					@mail($adminEmail,$PowerBB->_CONF['template']['_CONF']['lang']['errorlogin'],$warnMsg,
 					"From: $fromEmail\nX-Mailer:$Version AutoWarn System");
                     }
-					@set_time_limit(0);
-					@set_magic_quotes_runtime(0);
 					$PowerBB->functions->stoperror();
-
 			       exit();
 
 			}
