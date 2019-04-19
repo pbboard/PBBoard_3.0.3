@@ -632,10 +632,6 @@ class PowerBBCommon
 		// Check if the visitor is already online
        	$IsGuestOnline = $OnlineInfo;
 
-             if(isset($PowerBB->_SERVER['QUERY_STRING'])){
-        	    $Q_STRING = addslashes($PowerBB->_SERVER['QUERY_STRING']);
-        	}
-
 		if (!$IsGuestOnline)
 		{
        	$isBot = $PowerBB->functions->is_bot();
@@ -647,7 +643,7 @@ class PowerBBCommon
 			$InsertOnlineArr['field']['username'] 			= 	'Guest';
 			$InsertOnlineArr['field']['username_style'] 	= 	'Guest';
 			$InsertOnlineArr['field']['logged'] 			= 	$PowerBB->_CONF['now'];
-			$InsertOnlineArr['field']['path'] 				= 	$Q_STRING;
+			$InsertOnlineArr['field']['path'] 				= 	addslashes($PowerBB->_SERVER['QUERY_STRING']);
 			$InsertOnlineArr['field']['user_ip'] 			= 	$PowerBB->_CONF['ip'];
 			$InsertOnlineArr['field']['user_location'] 	    = 	$GuestLocation;
 			$InsertOnlineArr['field']['user_id']			=	-1;
@@ -666,12 +662,12 @@ class PowerBBCommon
 
 			if ($OnlineInfo)
 			{
-				if ($OnlineInfo['id']=='-1')
+				if ($OnlineInfo['user_id']=='-1')
 				{
 					$UpdateOnlineArr 					= 	array();
 					$UpdateOnlineArr['field']			=	array();
 
-					$UpdateOnlineArr['field']['path']				=	$Q_STRING;
+					$UpdateOnlineArr['field']['path']				=	addslashes($PowerBB->_SERVER['QUERY_STRING']);
 					$UpdateOnlineArr['field']['username'] 	= 	'Guest';
 					$UpdateOnlineArr['field']['username_style'] 	= 	'Guest';
 					$UpdateOnlineArr['field']['user_location']		=	$GuestLocation;

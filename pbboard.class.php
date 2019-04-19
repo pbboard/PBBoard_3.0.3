@@ -471,7 +471,7 @@ class PowerBB
  			$this->_GetLangRows();
  		   }
  		}
-		$this->_CONF['ip'] = $this->get_IP_address();
+		$this->_CONF['ip'] = $this->get_ip();
  	}
 
 
@@ -737,33 +737,146 @@ class PowerBB
 
 	}
 
-     // Function to get the client IP address
-	function get_IP_address()
+	/**
+	 * Fetch the IP address of the current user.
+	 *
+	 * @return string The IP address.
+	 */
+	function get_ip()
 	{
-         if(isset($this->_SERVER['REMOTE_ADDR']))
-         {
-			$IPaddress = $this->_SERVER['REMOTE_ADDR'];
-			$IPaddress = $this->sys_functions->CleanVariable($IPaddress,'trim');
-			$IPaddress = $this->sys_functions->CleanVariable($IPaddress,'html');
-			$IPaddress = $this->sys_functions->CleanVariable($IPaddress,'sql');
-			$ip_filter = $IPaddress;
-			$ip_filter = str_replace(".", "", $ip_filter);
-			$ip_filter = str_replace(":", "", $ip_filter);
-			if (is_numeric($ip_filter))
+		$ip = strtolower($this->_SERVER['REMOTE_ADDR']);
+
+			$addresses = array();
+
+			if(isset($this->_SERVER['HTTP_X_FORWARDED_FOR']))
 			{
-			return $IPaddress;
+				$addresses = explode(',', strtolower($this->_SERVER['HTTP_X_FORWARDED_FOR']));
 			}
-			else
+			elseif(isset($this->_SERVER['HTTP_X_REAL_IP']))
 			{
-			return 'UNKNOWN';
+				$addresses = explode(',', strtolower($this->_SERVER['HTTP_X_REAL_IP']));
 			}
+
+			if(is_array($addresses))
+			{
+				foreach($addresses as $val)
+				{
+					$val = trim($val);
+					// Validate IP address and exclude private addresses
+					if($this->my_inet_ntop($this->my_inet_pton($val)) == $val && !preg_match("#^(10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.|fe80:|fe[c-f][0-f]:|f[c-d][0-f]{2}:)#", $val))
+					{
+						$ip = $val;
+						break;
+					}
+				}
+			}
+
+		if(!$ip)
+		{
+			if(isset($this->_SERVER['HTTP_CLIENT_IP']))
+			{
+				$ip = strtolower($this->_SERVER['HTTP_CLIENT_IP']);
+			}
+		}
+
+		return $ip;
+	}
+
+	function my_long2ip($long)
+	{
+		// On 64-bit machines is_int will return true. On 32-bit it will return false
+		if($long < 0 && is_int(2147483648))
+		{
+			// We have a 64-bit system
+			$long += 4294967296;
+		}
+		return long2ip($long);
+	}
+
+	function my_inet_pton($ip)
+	{
+		if(function_exists('inet_pton'))
+		{
+			return @inet_pton($ip);
 		}
 		else
 		{
-		return 'UNKNOWN';
+			/**
+			 * Replace inet_pton()
+			 *
+			 * @category    PHP
+			 * @package     PHP_Compat
+			 * @license     LGPL - http://www.gnu.org/licenses/lgpl.html
+			 * @copyright   2004-2007 Aidan Lister <aidan@php.net>, Arpad Ray <arpad@php.net>
+			 * @link        http://php.net/inet_pton
+			 * @author      Arpad Ray <arpad@php.net>
+			 * @version     $Revision: 269597 $
+			 */
+			$r = ip2long($ip);
+			if($r !== false && $r != -1)
+			{
+				return pack('N', $r);
+			}
+
+			$delim_count = substr_count($ip, ':');
+			if($delim_count < 1 || $delim_count > 7)
+			{
+				return false;
+			}
+
+			$r = explode(':', $ip);
+			$rcount = count($r);
+			if(($doub = array_search('', $r, 1)) !== false)
+			{
+				$length = (!$doub || $doub == $rcount - 1 ? 2 : 1);
+				array_splice($r, $doub, $length, array_fill(0, 8 + $length - $rcount, 0));
+			}
+
+			$r = array_map('hexdec', $r);
+			array_unshift($r, 'n*');
+			$r = call_user_func_array('pack', $r);
+
+			return $r;
+		}
+	}
+
+	function my_inet_ntop($ip)
+	{
+		if(function_exists('inet_ntop'))
+		{
+			return @inet_ntop($ip);
+		}
+		else
+		{
+			/**
+			 * Replace inet_ntop()
+			 *
+			 * @category    PHP
+			 * @package     PHP_Compat
+			 * @license     LGPL - http://www.gnu.org/licenses/lgpl.html
+			 * @copyright   2004-2007 Aidan Lister <aidan@php.net>, Arpad Ray <arpad@php.net>
+			 * @link        http://php.net/inet_ntop
+			 * @author      Arpad Ray <arpad@php.net>
+			 * @version     $Revision: 269597 $
+			 */
+			switch(strlen($ip))
+			{
+				case 4:
+					list(,$r) = unpack('N', $ip);
+					return long2ip($r);
+				case 16:
+					$r = substr(chunk_split(bin2hex($ip), 4, ':'), 0, -1);
+					$r = preg_replace(
+						array('/(?::?\b0+\b:?){2,}/', '/\b0+([^0])/e'),
+						array('::', '(int)"$1"?"$1":"0$1"'),
+						$r);
+					return $r;
+			}
+			return false;
 		}
 	}
 	////////////
 
 }
+
 ?>
