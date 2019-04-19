@@ -10,6 +10,13 @@ class PowerBBManagementMOD
 
 		$PowerBB->_GET['section'] = $PowerBB->functions->CleanVariable($PowerBB->_GET['section'],'intval');
 
+			if (!$PowerBB->_CONF['member_permission'])
+			{
+			 $PowerBB->functions->ShowHeader();
+			 $PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['error_permission']);
+			 $PowerBB->functions->GetFooter();
+			}
+
 			if ($PowerBB->_GET['do_replys'])
 			{
 
@@ -539,19 +546,23 @@ class PowerBBManagementMOD
 		}
         else
 		{
+
 			if ($PowerBB->_CONF['group_info']['id'] != '1'
 			   AND  $PowerBB->_CONF['group_info']['id'] != '2')
 			{
 
-
-				if ($SubjectInfo['close'] == '1')
+				if ($PowerBB->_CONF['group_info']['group_mod'] == 0
+				and $ReplyInfo['writer'] != $PowerBB->_CONF['member_row']['username'])
+				{                      $PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['error_permission']);
+				}
+				if ($SubjectDelInfo['close'] == '1')
 				{
 				 //$PowerBB->functions->ShowHeader();
                  $PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['This_topic_is_locked']);
 				}
 
 
-		          if ($SubjectDelInfo['writer'] == $PowerBB->_CONF['member_row']['username'])
+		        if ($ReplyInfo['writer'] == $PowerBB->_CONF['member_row']['username'])
 		        {
 	              if ($PowerBB->functions->section_group_permission($PowerBB->_GET['section'],$PowerBB->_CONF['group_info']['id'],'del_own_reply') == 0)
 				  {
@@ -622,7 +633,11 @@ class PowerBBManagementMOD
 
 			$ReplyInfo = $PowerBB->core->GetInfo($ReplyArr,'reply');
 
-
+		if ($PowerBB->_CONF['group_info']['group_mod'] == 0
+		and $ReplyInfo['writer'] != $PowerBB->_CONF['member_row']['username'])
+		{
+		$PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['error_permission']);
+		}
 	  if ($PowerBB->_POST['deletetype'] == 1)
 	  {
 

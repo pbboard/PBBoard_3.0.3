@@ -59,7 +59,7 @@ $l['PBBoard_already_installed'] = "<p>Welcome to the installation wizard for PBB
 
 $l['PBBoard_incorrect_folder'] = "<div class=\"border_wrapper upgrade_note\" style=\"padding: 4px;\">
 	<h3>PBBoard has detected that it is running from the \"Upload\" directory.</h3>
-	<p>While there is nothing wrong with this, it is recommended that your upload the contents of the \"Upload\" directory and not the directory itself.<br /><br />For more information please see the <a href=\"http://docs.pbboard.info/Help-Upload_Directory.html\" target=\"_blank\">PBBoard Docs</a>.</p>
+	<p>While there is nothing wrong with this, it is recommended that your upload the contents of the \"Upload\" directory and not the directory itself.<br /></p>
 </div>";
 
 $l['welcome_step'] = '<p>Welcome to the installation wizard for PBBoard {1}. This wizard will install and configure a copy of PBBoard on your server.</p>

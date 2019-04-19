@@ -58,8 +58,8 @@ $l['PBBoard_already_installed'] = "<p>مرحباً بك في معالج تثبي
 
 $l['PBBoard_incorrect_folder'] = "<div class=\"border_wrapper upgrade_note\" style=\"padding: 4px;\">
 	<h3>اكتشف PBBoard أنه يعمل من \"Upload\" وهو اسم المجلد الافتراضي.</h3>
-	<p>في حين لا يوجد شيء خاطئ في هذا ، فمن المستحسن أن تقوم بتحميل محتويات \"Upload\" الدليل وليس الدليل نفسه.<br /><br />لمزيد من المعلومات يرجى الاطلاع على <a href=\"http://docs.pbboard.info/Help-Upload_Directory.html\" target=\"_blank\">PBBoard Docs</a>.</p>
-</div>";
+	<p>في حين لا يوجد شيء خاطئ في هذا ، فمن المستحسن أن تقوم بتحميل محتويات \"Upload\" الدليل وليس الدليل نفسه.<br /></p>
+	</div>";
 
 $l['welcome_step'] = '<p>مرحبًا بك في معالج التثبيت لـ PBBoard {1}. سيقوم هذا المعالج بتثبيت وتكوين نسخة من PBBoard على الخادم الخاص بك.</p>
 <p>الآن بعد أن قمت بتحميل ملفات PBBoard ، يجب إنشاء قاعدة بيانات جديدة وتجهيز معلوماتها لإدخالها في الخطوة القادمة. يوجد أدناه مخطط لما سيتم إنجازه أثناء التثبيت.</p>
@@ -108,23 +108,23 @@ $l['req_step_reqtable'] = '<div class="border_wrapper">
 			<td class="last alt_col">{4}</td>
 		</tr>
 		<tr class="alt_row">
-			<td class="first">تصريح الكتابة لمجلد الملحقات:</td>
+			<td class="first">تصريح الكتابة لمجلد الملحقات: addons</td>
 			<td class="last alt_col">{5}</td>
 		</tr>
 		<tr>
-			<td class="first">تصريح الكتابة لمجلد المرفقات:</td>
+			<td class="first">تصريح الكتابة لمجلد تحميل المرفقات: download</td>
 			<td class="last alt_col">{6}</td>
 		</tr>
 		<tr>
-			<td class="first">تصريح الكتابة لمجلد الكاش:</td>
+			<td class="first">تصريح الكتابة لمجلد الكاش: cache</td>
 			<td class="last alt_col">{7}</td>
 		</tr>
 		<tr class="alt_row">
-			<td class="first">رفع الملفات على المجلد الرئيسي:</td>
+			<td class="first">رفع الملفات على المسار الرئيسي:</td>
 			<td class="last alt_col">{8}</td>
 		</tr>
 		<tr class="last">
-			<td class="first">تصريح الكتابة لمجلد الصور الشخصية:</td>
+			<td class="first">تصريح الكتابة لمجلد الصور الشخصية: download/avatar</td>
 			<td class="last alt_col">{9}</td>
 		</tr>
 		</tbody>
