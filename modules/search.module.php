@@ -289,8 +289,12 @@ class PowerBBSearchEngineMOD
 	function _StartSearch()
 	{
 		global $PowerBB;
-        $flood_search = ($PowerBB->_CONF['member_row']['lastsearch_time'] - time() + $PowerBB->_CONF['info_row']['flood_search']);
-       if ((time() - $PowerBB->_CONF['info_row']['flood_search']) <= $PowerBB->_CONF['member_row']['lastsearch_time'])
+		if (is_numeric($PowerBB->_CONF['member_row']['lastsearch_time']) && is_numeric($PowerBB->_CONF['info_row']['flood_search'])) {
+		 $flood_search = ($PowerBB->_CONF['member_row']['lastsearch_time'] - @time() + $PowerBB->_CONF['info_row']['flood_search']);
+		} else {
+		  $flood_search = $PowerBB->_CONF['info_row']['flood_search'];
+		}
+       if ((@time() - $PowerBB->_CONF['info_row']['flood_search']) <= $PowerBB->_CONF['member_row']['lastsearch_time'])
        {
           $PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['flood_search1']. ' ' .$flood_search . ' ' .$PowerBB->_CONF['template']['_CONF']['lang']['flood_search2']);
        }
@@ -397,7 +401,7 @@ class PowerBBSearchEngineMOD
          $SectionInfo = $PowerBB->DB->sql_query("SELECT * FROM " . $PowerBB->table['section'] . " WHERE sec_section<>1");
 		}
 
-       if  (!isset($keyword{$PowerBB->_CONF['info_row']['characters_keyword_search']}))
+       if  (!@isset($keyword{$PowerBB->_CONF['info_row']['characters_keyword_search']}))
    		{
     	 $stop = ($PowerBB->_CONF['info_row']['ajax_search'] and !$PowerBB->_POST['ajax']) ? false : true;
 		 $PowerBB->functions->error($PowerBB->_CONF['template']['_CONF']['lang']['characters_keyword_search'],$stop);
