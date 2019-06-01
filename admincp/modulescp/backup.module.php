@@ -105,15 +105,6 @@ class PowerBBBackupMOD
 				        require("../includes/config.php");
 						require_once("../includes/iam_backup.php");
 						$filename = $PowerBB->_POST['filename'];
-						$backup = new iam_backup($config['db']['server'], $config['db']['name'], $config['db']['username'], $config['db']['password'], true, false, false);
-						$backup->perform_backup();
-						$conn = @mysql_pconnect($config['db']['server'], $config['db']['username'], $config['db']['password']);
-						if(!@mysql_select_db($config['db']['name']))  // If db not set, return 0
-						{
-						echo "An error has occured. Could not select the MySQL Database";
-						}
-						$backup = new iam_backup($conn);
-                       $backup->perform_backup();
                        $backup = new iam_backup($config['db']['server'], $config['db']['name'], $config['db']['username'], $config['db']['password'], true, false, true, $filename);
                        $backup->perform_backup();
 						$GetForumAdress = $PowerBB->functions->GetForumAdress();

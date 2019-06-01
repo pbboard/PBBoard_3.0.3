@@ -76,7 +76,7 @@
 		 * param Boolean $compress Indicates whether the dump will be compressed (using GZIP compression). It only has an effect when downloading the file.
 		 * param String $filename Indicates Path and name of the file (when the dump is done on the server)
 		 */
-		function iam_backup( $host = 'localhost', $dbname = 'mysql', $dbuser = 'root', $dbpass = '', $struct_only = false, $output = true, $compress = true, $filename = "" )
+		function __construct( $host = 'localhost', $dbname = 'mysqli', $dbuser = 'root', $dbpass = '', $struct_only = false, $output = true, $compress = true, $filename = "" )
 		{
 			$this->output = $output;
 			$this->struct_only = $struct_only;
@@ -119,20 +119,24 @@
 			$newfile .= "# Database: $this->dbname" . $this->newline;
 			$newfile .= "# Date: $now" . $this->newline;
 			$newfile .= "#------------------------------------------" . $this->newline . $this->newline;
-
-			$result = @mysql_pconnect( "$this->host", "$this->dbuser", "$this->dbpass" );
+			require("config.php");
+			$this->host = $config['db']['server'];
+			$this->dbname = $config['db']['name'];
+			$this->dbuser = $config['db']['username'];
+			$this->dbpass = $config['db']['password'];
+			$result = mysqli_connect($this->host,$this->dbuser,$this->dbpass,$this->dbname);
 			if ( !$result ) // If no connection can be obtained, return empty string
 			{
 				return "Error. Can´t connect to Database: $this->dbname";
 			}
-
-			if ( !mysql_select_db("$this->dbname") ) // If db can't be set, return empty string
+           $select = mysqli_select_db($result,$this->dbname);
+			if ( !$select ) // If db can't be set, return empty string
 			{
 				return "Error. Database $this->dbname could not be selected.";
 			}
 
-			$result = mysql_query( "show tables from `$this->dbname`" );
-			while ( list($table) = mysql_fetch_row($result) )
+			$result_query = mysqli_query($result,"show tables from `$this->dbname`" );
+			while ( list($table) = mysqli_fetch_array($result_query) )
 			{
 				$newfile .= $this->_get_def( $table );
 				$newfile .= "$this->newline";
@@ -193,14 +197,21 @@
 		 */
 		function _get_def( $tablename )
 		{
+            require("config.php");
+			$this->host = $config['db']['server'];
+			$this->dbname = $config['db']['name'];
+			$this->dbuser = $config['db']['username'];
+			$this->dbpass = $config['db']['password'];
+			$result = mysqli_connect($this->host,$this->dbuser,$this->dbpass,$this->dbname);
+
 			$def = "";
 			$def .= "#------------------------------------------" . $this->newline;
 			$def .= "# Table definition for $tablename" . $this->newline;
 			$def .= "#------------------------------------------" . $this->newline;
 			$def .= "DROP TABLE IF EXISTS $tablename;" . $this->newline . $this->newline;
 			$def .= "CREATE TABLE `$tablename` (" . $this->newline;
-			$result = mysql_query( "SHOW FIELDS FROM `$tablename`" ) or die( "Table $tablename not existing in database" );
-			while ( $row = mysql_fetch_array($result) )
+			$result_query = mysqli_query( $result,"SHOW FIELDS FROM `$tablename`" ) or die( "Table $tablename not existing in database" );
+			while ( $row = mysqli_fetch_array($result_query) )
 			{
 				// Updated after Carlos Carrasco's suggestion. Thanks!
 				$def .= " `$row[Field]` $row[Type]"; // Sorround field names with quotes
@@ -221,8 +232,8 @@
 			}
 			$def = str_replace( ",$this->newline$", "", $def );
             $def = str_replace('\"','"',$def);
-			$result = mysql_query( "SHOW KEYS FROM `$tablename`" );
-			while ( $row = mysql_fetch_array($result) )
+			$result_query = mysqli_query( $result,"SHOW KEYS FROM `$tablename`" );
+			while ( $row = mysqli_fetch_array($result_query) )
 			{
 				$kname = $row[Key_name];
 				if ( ($kname != "PRIMARY") && ($row[Non_unique] == 0) ) $kname = "UNIQUE|$kname";
@@ -237,9 +248,9 @@
 					if ( substr($x, 0, 6) == "UNIQUE" ) $def .= "   UNIQUE " . substr( $x, 7 ) . " (" . implode( $columns, ", " ) . ")";
 					else  $def .= "   KEY $x (`" . implode( $columns, "`, `" ) . "`)";
 			}
-            $resultField = mysql_query( "SELECT * FROM `$tablename`" );
-			$Field = mysql_num_rows($resultField);
-			$def .= "$this->newline) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=$Field ;";
+            $resultField = mysqli_query($result,"SELECT * FROM `$tablename`" );
+			$Field = mysqli_num_rows($resultField);
+			$def .= "$this->newline) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=$Field ;";
 
 			return ( stripslashes($def) );
 		}
@@ -252,22 +263,29 @@
 		 */
 		function _get_content( $tablename )
 		{
+            require("config.php");
+			$this->host = $config['db']['server'];
+			$this->dbname = $config['db']['name'];
+			$this->dbuser = $config['db']['username'];
+			$this->dbpass = $config['db']['password'];
+			$result = mysqli_connect($this->host,$this->dbuser,$this->dbpass,$this->dbname);
+
 			$content = "";
 
-			$result = mysql_query( "SELECT * FROM $tablename" );
+			$result_query = mysqli_query($result,"SELECT * FROM $tablename" );
 
-			if ( mysql_num_rows($result) > 0 )
+			if ( mysqli_num_rows($result_query) > 0 )
 			{
 				$content .= "#------------------------------------------" . $this->newline;
 				$content .= "# Data inserts for $tablename" . $this->newline;
 				$content .= "#------------------------------------------" . $this->newline;
 			}
 
-			while ( $row = mysql_fetch_row($result) )
+			while ( $row = mysqli_fetch_array($result_query) )
 			{
 				$insert = "INSERT INTO $tablename VALUES (";
 
-				for ( $j = 0; $j < mysql_num_fields($result); $j++ )
+				for ( $j = 0; $j < mysqli_num_fields($result_query); $j++ )
 				{
 					if ( !isset($row[$j]) ) $insert .= "NULL,";
 					else

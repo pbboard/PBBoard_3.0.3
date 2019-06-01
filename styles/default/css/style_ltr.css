@@ -1587,44 +1587,38 @@ border:1px solid #EAE3D1;
 background-color:#EDF7FF;
 }
 .quotetop{
-background-color: #FFFFFF;
+background: none repeat-x scroll 0 0 #e3f6ff;
 background-image:url('../images/lastpost.gif');
 background-repeat:no-repeat;
-background-position:top 7px left 7px;
+background-position:12px 12px;
 border-top-left-radius:9px;
 border-top-right-radius:9px;
-border-bottom-right-radius:9px;
-border-bottom-left-radius:9px;
-border:2px solid #C6C9C9;
-color:#C70917;
+*border-bottom-right-radius:9px;
+*border-bottom-left-radius:9px;
+border:1px solid #98bdc5;
+color:#323232;
 font: normal 11px tahoma;
 text-align:left;
-padding-left:10px;
-padding-top:3px;
-padding-bottom:3px;
-width:auto;
-max-width:30%;
-margin:15px 35px -24px 18px;
+padding: 10px;
+padding-left: 30px;
+margin: 0px;
 position:relative;
+bottom: 0px;
+top: 0px;
 }
 .quotemain{
-background-color: #FFFFFF;
-background-image:url('../images/css_img_quote.gif');
-background-repeat:no-repeat;
-background-position:top 7px right 7px;
-margin-right:auto;
-margin-left:auto;
-border-top-right-radius:14px;
-border-top-left-radius:14px;
-border-bottom-left-radius:14px;
-border-bottom-right-radius:14px;
-border:2px solid #C6C9C9;
-color:#694040;
-padding-top:13px;
-padding-right:8px;
-padding-left:8px;
-padding-bottom:9px;
-width:95%;
+    background: none repeat-x scroll 0 0 #e3f6ff;
+    font-family: "Droid Arabic Kufi","tahoma",sans-serif;
+    border: 1px solid #98bdc5;
+    border-top: 1px solid #FFFFFF;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+	text-align:left;
+	margin: 0px;
+	position:relative;
+	top: 0px;
+	bottom: 0px;
 }
 .codemain{
 background-color: transparent;

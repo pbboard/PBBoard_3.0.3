@@ -2555,6 +2555,10 @@ function gzip_encode($contents, $level=1)
 							$find = "{rss:link}";
 							if(stristr($FeedsInfo['text'],$find))
 							{
+							  if($PowerBB->_CONF['template']['_CONF']['lang']['url_Original_repeat'] == '')
+								{
+								 $PowerBB->_CONF['template']['_CONF']['lang']['the_original_topic'] = $PowerBB->_CONF['template']['_CONF']['lang']['url_Original_repeat'];
+								}
 							$LINK = "\n\n [url=".$Item['LINK']."]".$PowerBB->_CONF['template']['_CONF']['lang']['the_original_topic']."[/url]";
 							}else{
 							$LINK = "";
@@ -2941,12 +2945,12 @@ function gzip_encode($contents, $level=1)
         $last_Update = $PowerBB->_CONF['info_row']['last_time_updates'];
         $Version = $PowerBB->_CONF['info_row']['MySBB_version'];
         $pbboard_last_time_updates = 'http://www.pbboard.info/check_updates/pbboard_last_time_updates_303.txt';
-
 			$ch = @curl_init();
 			@curl_setopt($ch, CURLOPT_URL, $pbboard_last_time_updates);
 			@curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			@curl_setopt($ch, CURLOPT_TIMEOUT, 10 );
 			$last_time_updates = @curl_exec($ch);
-
+            @curl_close($ch);
          if(!$last_time_updates)
 		 {
       	   $last_time_updates = @file_get_contents($pbboard_last_time_updates);
@@ -2981,8 +2985,9 @@ function gzip_encode($contents, $level=1)
 		$ch = @curl_init();
 		@curl_setopt($ch, CURLOPT_URL, $LatestVersionUrl);
 		@curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		@curl_setopt($ch, CURLOPT_TIMEOUT, 10 );
 		$LatestVersionTxt = @curl_exec($ch);
-
+        @curl_close($ch);
          if(!$LatestVersionTxt)
 		 {
 		 $LatestVersionTxt = @file_get_contents($LatestVersionUrl);

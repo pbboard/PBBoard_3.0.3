@@ -210,7 +210,7 @@ class PowerBBCodeParse
 
 		if($text_only == false)
 		{
-			$replace = "<blockquote class=\"quotetop\" style=\"margin:0px\"><cite>".$PowerBB->_CONF['template']['_CONF']['lang']['quote']."</cite></blockquote><blockquote class=\"quotemain\" style=\"margin:0px; margin-top:-11px\">$1</blockquote>\n";
+			$replace = "<blockquote class=\"quotetop\"><cite>".$PowerBB->_CONF['template']['_CONF']['lang']['quote']."</cite></blockquote><blockquote class=\"quotemain\">$1</blockquote>\n";
 			$replace_callback = array($this, 'mycode_parse_post_quotes_callback1');
 		}
 		else
@@ -284,12 +284,12 @@ class PowerBBCodeParse
 
 		if(empty($username))
 		{
-			return "\n <blockquote class=\"quotetop\" style=\"margin:0px\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] ."{$span}{$username}</blockquote><blockquote class=\"quotemain\" style=\"margin:0px; margin-top:-11px\">{$message}</blockquote>\n \n";
+			return "\n <blockquote class=\"quotetop\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] ."{$span} <b>{$username}</b></blockquote><blockquote class=\"quotemain\">{$message}</blockquote>\n \n";
 
 		}
 		else
 		{
-			return "\n <blockquote class=\"quotetop\" style=\"margin:0px\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] ."{$span}{$username}</blockquote><blockquote class=\"quotemain\" style=\"margin:0px; margin-top:-11px\">{$message}</blockquote>\n \n";
+			return "\n <blockquote class=\"quotetop\">" .$PowerBB->_CONF['template']['_CONF']['lang']['quote_username'] ."{$span} <b>{$username}</b></blockquote><blockquote class=\"quotemain\">{$message}</blockquote>\n \n";
 		}
 	}
 

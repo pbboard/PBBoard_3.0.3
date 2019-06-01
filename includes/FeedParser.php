@@ -239,7 +239,7 @@ class FeedParser{
 			@curl_setopt($ch, CURLOPT_URL, $this->url);
 			@curl_setopt($ch, CURLOPT_HEADER, false);
 			@curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
+            @curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			$content    = @curl_exec($ch);
 			$error      = @curl_error($ch);
 

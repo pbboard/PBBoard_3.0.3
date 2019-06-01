@@ -1596,10 +1596,10 @@ color:#323232;
 font: normal 11px tahoma;
 text-align:right;
 padding: 10px;
-width:auto;
-margin:20px 40px -20px 22px;
+margin: 0px;
 position:relative;
-width:80%;
+bottom: 0px;
+top: 0px;
 }
 .quotemain{
     background: none repeat-x scroll 0 0 #e3f6ff;
@@ -1608,13 +1608,12 @@ width:80%;
     border-top: 1px solid #FFFFFF;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    box-shadow: 0 0 3px #e3f6ff;
-    margin-bottom: 10px;
-    margin-top: 20px;
-    overflow: hidden;
     padding: 10px;
-    display: inline-block;
-	width:80%;
+	text-align:right;
+	margin: 0px;
+	position:relative;
+	top: 0px;
+	bottom: 0px;
 }
 .codemain{
 background-color: transparent;

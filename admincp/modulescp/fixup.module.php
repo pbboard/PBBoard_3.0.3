@@ -845,10 +845,13 @@ class PowerBBFixMOD
 			$ch = @curl_init();
 			@curl_setopt($ch, CURLOPT_URL, $pbboard_last_time_updates);
 			@curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			@curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			$last_time_updates = @curl_exec($ch);
+			@curl_close($ch);
 		 }
 
 		$arr = explode('-',$last_time_updates);
+
 		$url     = trim($arr[2]);
 
         $file_get = fopen($url, 'r');
