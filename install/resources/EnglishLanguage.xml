@@ -2630,5 +2630,6 @@ You can now make the automatic update for the latest updates PBBoard ]]></phrase
 <phrase name="show_blocks" pbbversion="3.0.3" product="PBBoard" username="Soliman" date="1447952965" fieldname="forum"><![CDATA[Show blocks]]></phrase>
 <phrase name="choose_style_color" pbbversion="3.0.3" product="PBBoard" username="admin" date="1447952965" fieldname="forum"><![CDATA[Choose your favorite color]]></phrase>
 <phrase name="reset_original_color" pbbversion="3.0.3" product="PBBoard" username="admin" date="1447952965" fieldname="forum"><![CDATA[Reset Original Color]]></phrase>
+<phrase name="the_original_topic" pbbversion="3.0.3" product="PBBoard" username="PBBoard_Staff" date="1447952965" fieldname="forum"><![CDATA[.. the original topic ]]></phrase>
 </phrasegroup>
 </language>

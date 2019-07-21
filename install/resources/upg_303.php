@@ -30,9 +30,15 @@ function upgrade303_dbchanges()
       $info_query = $db->query("SELECT * FROM " . $config['db']['prefix'] . "info WHERE var_name='rules'");
       $info_row   = $db->fetch_array($info_query);
       $rules = $info_row['value'];
+      if(empty($info_row['value']))
+      {      $info_query = $db->query("SELECT * FROM " . $config['db']['prefix'] . "info WHERE var_name='welcome_message_text'");
+      $info_row   = $db->fetch_array($info_query);
+      $rules = $info_row['value'];
+      }
     if(strstr($rules,'ق')
     or strstr($rules,'م')
     or strstr($rules,'ا')
+    or strstr($rules,'ر')
     or strstr($rules,'ه'))
     {
     echo "<br /><br />".$lang->req_convert_utf;
@@ -99,9 +105,12 @@ function upgrade303_convert_utf8()
 							 }
 			                elseif(strstr($value,'varchar'))
 			                {
+			                if($row2[0] != 'filepath')
+			                {
 							mysqli_query($mysqli,'UPDATE ' .$table. ' SET
 							    '.$row2[0].'=convert(cast(convert('.$row2[0].' using  latin1) as binary) using utf8mb4)
 							WHERE 1');
+							}
 			                }
 			                elseif($value == 'mediumtext')
 			                {

@@ -2647,5 +2647,6 @@
 <phrase name="show_blocks" pbbversion="3.0.3" product="PBBoard" username="Soliman" date="1447952959" fieldname="forum"><![CDATA[إظهار البلوكات]]></phrase>
 <phrase name="choose_style_color" pbbversion="3.0.3" product="PBBoard" username="admin" date="1447952959" fieldname="forum"><![CDATA[اختر لونك المفضل]]></phrase>
 <phrase name="reset_original_color" pbbversion="3.0.3" product="PBBoard" username="admin" date="1447952959" fieldname="forum"><![CDATA[إعادة اللون الافتراضي]]></phrase>
+<phrase name="the_original_topic" pbbversion="3.0.3" product="PBBoard" username="PBBoard_Staff" date="1447952959" fieldname="forum"><![CDATA[..الموضوع الأصلي]]></phrase>
 </phrasegroup>
 </language>

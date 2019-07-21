@@ -493,23 +493,32 @@ class PowerBBCodeParse
           // regex iframe
         $text = str_ireplace("<iframe", '<iframe sandbox="allow-popups allow-same-origin"', $text);
           // nofollow links out said
+		if (isset($PowerBB->_SERVER['HTTPS']) &&
+		    ($PowerBB->_SERVER['HTTPS'] == 'on' || $PowerBB->_SERVER['HTTPS'] == 1) ||
+		    isset($PowerBB->_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+		    $PowerBB->_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+		  $protocol = 'https://';
+		}
+		else {
+		  $protocol = 'http://';
+		}
         $text = str_ireplace('target="_blank"', '', $text);
         $text = str_ireplace("target='_blank'", '', $text);
         $text = str_ireplace('rel="dofollow"', '', $text);
         $text = str_ireplace('rel="nofollow"', '', $text);
-		$GetHOSThttp  = "http://".$PowerBB->_SERVER['HTTP_HOST'];
+		$GetHOSThttp  = $protocol.$PowerBB->_SERVER['HTTP_HOST'];
 		$text = str_ireplace('href="'.$GetHOSThttp,'rel="dofollow" href="'.$GetHOSThttp,$text);
 		$text = str_ireplace('href="'.!$GetHOSThttp,'rel="nofollow" href="'.!$GetHOSThttp,$text);
-		$GetHOSThttps  = "https://".$PowerBB->_SERVER['HTTP_HOST'];
+		$GetHOSThttps  = $protocol.$PowerBB->_SERVER['HTTP_HOST'];
 		$text = str_ireplace('href="'.$GetHOSThttps,'rel="dofollow" href="'.$GetHOSThttps,$text);
 		$text = str_ireplace('href="'.!$GetHOSThttps,'rel="nofollow" href="'.!$GetHOSThttps,$text);
 		$GetHOSTwww  = "www.".$PowerBB->_SERVER['HTTP_HOST'];
 		$text = str_ireplace('href="'.$GetHOSTwww,'rel="dofollow" href="'.$GetHOSTwww,$text);
 		$text = str_ireplace('href="'.!$GetHOSTwww,'rel="nofollow" href="'.!$GetHOSTwww,$text);
-		$GetHOSThttpwww  = "http://www.".$PowerBB->_SERVER['HTTP_HOST'];
+		$GetHOSThttpwww  = $protocol."www.".$PowerBB->_SERVER['HTTP_HOST'];
 		$text = str_ireplace('href="'.$GetHOSThttpwww,'rel="dofollow" href="'.$GetHOSThttpwww,$text);
 		$text = str_ireplace('href="'.!$GetHOSThttpwww,'rel="nofollow" href="'.!$GetHOSThttpwww,$text);
-		$GetHOSThttpswww  = "https://www.".$PowerBB->_SERVER['HTTP_HOST'];
+		$GetHOSThttpswww  = $protocol."www.".$PowerBB->_SERVER['HTTP_HOST'];
 		$text = str_ireplace('href="'.$GetHOSThttpswww,'rel="dofollow" href="'.$GetHOSThttpswww,$text);
 		$text = str_ireplace('href="'.!$GetHOSThttpswww,'rel="nofollow" href="'.!$GetHOSThttpswww,$text);
 
