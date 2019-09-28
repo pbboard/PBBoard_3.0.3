@@ -142,16 +142,14 @@ class PowerBBRSSMOD
 	$SecArr 		= 	array();
 	$SecArr['where'] 	= 	array('id',$PowerBB->_GET['id']);
 	$Section = $PowerBB->core->GetInfo($SecArr,'section');
-			@include("cache/sectiongroup_cache".$PowerBB->_GET['id'].".php");
-			$groups = unserialize(base64_decode($sectiongroup_cache));
-			if ($groups[$PowerBB->_CONF['group_info']['id']]['view_section'] == 0)
-			{
-			    $Section['hide_subject'] = '1';
-			}
-			elseif ($groups[$PowerBB->_CONF['group_info']['id']]['view_subject'] == 0)
-			{
-			$Section['hide_subject']	= '1';
-			}
+		if ($PowerBB->functions->section_group_permission($PowerBB->_GET['id'],$PowerBB->_CONF['group_info']['id'],'view_section') == 0)
+		{
+		$Section['hide_subject'] = '1';
+		}
+		elseif ($PowerBB->functions->section_group_permission($PowerBB->_GET['id'],$PowerBB->_CONF['group_info']['id'],'view_subject') == 0)
+		{
+		$Section['hide_subject']	= '1';
+		}
 		if ($Section['hide_subject'] == '1')
 		{
 		echo '	<item>';
