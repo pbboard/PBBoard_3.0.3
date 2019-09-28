@@ -535,7 +535,7 @@ class PowerBBCodeParse
          $text = str_ireplace('absolute',"a*bsolute",$text);
          $text = str_ireplace('document',"d*ocument",$text);
          $text = str_ireplace('cookie',"c*ookie",$text);
-         $text = str_ireplace('alert',"a*lert",$text);
+         $text = str_ireplace('alert',"a l e r t",$text);
          $text = str_ireplace('location',"l*ocation",$text);
          $text = str_ireplace('equiv',"e*quiv",$text);
          $text = str_ireplace('refresh',"r*efresh",$text);
@@ -546,6 +546,7 @@ class PowerBBCodeParse
          $text = str_ireplace('input',"i*nput",$text);
          $text = str_ireplace('action',"a*ction",$text);
          $text = str_ireplace('<form',"<f*orm",$text);
+         $text = str_ireplace('script',"s c r i p t",$text);
         $censorwords = preg_split('#[ \r\n\t]+#', $PowerBB->_CONF['info_row']['censorwords'], -1, PREG_SPLIT_NO_EMPTY);
         $text = str_ireplace($censorwords,'**', $text);
          $blankasciistrip ="160 173 u8205 u8204 u8237 u8238";
