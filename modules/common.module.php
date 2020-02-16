@@ -844,14 +844,14 @@ class PowerBBCommon
     	foreach ($PowerBB->_GET as $xss_get)
     	{
 
-   			if ((strstr(strtolower($xss_get), "<[^>]*script*\"?[^>]*>")) or
-       			(strstr(strtolower($xss_get),"<[^>]*object*\"?[^>]*>")) or
-       			(strstr(strtolower($xss_get), "<[^>]*iframe*\"?[^>]*>")) or
-       			(strstr(strtolower($xss_get), "<[^>]*applet*\"?[^>]*>")) or
-       			(strstr(strtolower($xss_get), "<[^>]*meta*\"?[^>]*>")) 	or
-       			(strstr(strtolower($xss_get), "<[^>]*style*\"?[^>]*>")) 	or
-       			(strstr(strtolower($xss_get), "<[^>]*form*\"?[^>]*>")) 	or
-       			(strstr(strtolower($xss_get), "<[^>]*img*\"?[^>]*>")))
+   			if ((@strstr(@strtolower($xss_get), "<[^>]*script*\"?[^>]*>")) or
+       			(@strstr(@strtolower($xss_get),"<[^>]*object*\"?[^>]*>")) or
+       			(@strstr(@strtolower($xss_get), "<[^>]*iframe*\"?[^>]*>")) or
+       			(@strstr(@strtolower($xss_get), "<[^>]*applet*\"?[^>]*>")) or
+       			(@strstr(@strtolower($xss_get), "<[^>]*meta*\"?[^>]*>")) 	or
+       			(@strstr(@strtolower($xss_get), "<[^>]*style*\"?[^>]*>")) 	or
+       			(@strstr(@strtolower($xss_get), "<[^>]*form*\"?[^>]*>")) 	or
+       			(@strstr(@strtolower($xss_get), "<[^>]*img*\"?[^>]*>")))
             {
     			exit('No direct script access allowed');
    			}
@@ -872,16 +872,16 @@ class PowerBBCommon
 			}
 			}
 
-   			if ((strstr(strtolower($sql_get), "select")) or
-       			(strstr(strtolower($sql_get), "create")) or
-       			(strstr(strtolower($sql_get), "alert")) or
-       			(strstr(strtolower($sql_get), "union")) or
-       			(strstr($sql_get, "&#39;")) or
-       			(strstr($sql_get, "'")) or
-       			(strstr($sql_get, "--")) or
-       			(strstr($sql_get, "(")) or
-       			(strstr($sql_get, ")")) or
-       			(strstr(strtolower($sql_get), "onload")))
+   			if ((@strstr(@strtolower($sql_get), "select")) or
+       			(@strstr(@strtolower($sql_get), "create")) or
+       			(@strstr(@strtolower($sql_get), "alert")) or
+       			(@strstr(@strtolower($sql_get), "union")) or
+       			(@strstr($sql_get, "&#39;")) or
+       			(@strstr($sql_get, "'")) or
+       			(@strstr($sql_get, "--")) or
+       			(@strstr($sql_get, "(")) or
+       			(@strstr($sql_get, ")")) or
+       			(@strstr(@strtolower($sql_get), "onload")))
        		{
        		    exit('No direct script access allowed');
    			}

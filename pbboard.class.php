@@ -11,7 +11,7 @@ define('SAFEMODE', (ini_get('safe_mode') == 1 OR strtolower(ini_get('safe_mode')
 	$_Injection = array("'","%27","order","union","select",'from');
 	foreach($_GET as $key=>$val)
 	{
-	$val = strtolower($val);
+	$val = @strtolower($val);
 		foreach($_Injection as $String)
 		{
 			if(strpos($val,$String) !== false)
@@ -744,7 +744,7 @@ class PowerBB
 	 */
 	function get_ip()
 	{
-		$ip = strtolower($this->_SERVER['REMOTE_ADDR']);
+		$ip = @strtolower($this->_SERVER['REMOTE_ADDR']);
 
 			$addresses = array();
 

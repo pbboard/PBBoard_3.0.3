@@ -21,7 +21,7 @@
 	$page = str_replace( 'index', 'main', $page );
 	$page = str_replace( 'special_subject', 'special_topics', $page );
 	$module = ('modules/'.$page.'.module.php');
-	if(!file_exists($module))
+	if(!@file_exists($module))
 	{
 		@header("Location: index.php");
 		exit;

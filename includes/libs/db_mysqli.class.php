@@ -63,7 +63,7 @@ class PowerBBSQL
 
 		if(function_exists('mysqli_connect'))
 		{
-            $connect = mysqli_connect($this->host,$this->db_username,$this->db_password,$this->db_name);
+            $connect = @mysqli_connect($this->host,$this->db_username,$this->db_password,$this->db_name);
             @mysqli_set_charset($connect, $this->encoding);
             $result = @mysqli_query($connect, "SET @@session.sql_mode=''");
             $row = @mysqli_fetch_assoc($result);
@@ -85,7 +85,7 @@ class PowerBBSQL
 
 	function sql_select_db()
 	{
-		$select = mysqli_select_db($this->sql_connect(),$this->db_name);
+		$select = @mysqli_select_db($this->sql_connect(),$this->db_name);
 		/* change character set to utf8mb4 */
        // mysqli_query("set character_set_server='utf8mb4'");
        // mysqli_query("set names 'utf8mb4'");
@@ -114,7 +114,7 @@ class PowerBBSQL
 	function sql_query($query)
 	{
         global $PowerBB;
-		$result = mysqli_query($this->sql_connect(),$query);
+		$result = @mysqli_query($this->sql_connect(),$query);
 		if (!$result)
 		{
 		$this->_mysqli_err_no = mysqli_errno($this->sql_connect());
