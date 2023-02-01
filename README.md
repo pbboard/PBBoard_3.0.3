@@ -34,7 +34,7 @@ https://www.pbboard.info/forums/
 				handy: 
 				<ul>
 					<li style="padding-bottom: 10px"><strong>Database Details:</strong><br>
-					PBBoard 3.0.3 can run on MySQLi, PHP 8. You will need the 
+					PBBoard 3.0.3 can run on MySQLi, PHP 7. You will need the 
 					details of your database so PBBoard can connect to it. 
 					Generally your web host should be able to supply you with 
 					these details.
